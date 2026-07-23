@@ -29,19 +29,19 @@ A user should be able to create their first reminder in **under 30 seconds**.
 
 Remindo is **not** a general calendar and **not** a complex company-management system.
 
-## Current build milestone
+## Implemented functionality
 
-The repository currently contains the production foundation and the first working product
-slice:
+- Sanctum registration, login, logout, verification delivery, password reset/change, and session-token revocation
+- authenticated reminder CRUD with ownership policies and plan limits
+- one or more scheduled notifications per reminder, stored in UTC
+- minute scheduler, queue jobs, retries, stale-job recovery, idempotency, and attempt history
+- SMTP email and in-app delivery; SMS and WhatsApp operate explicitly in Mock mode
+- snooze, complete, archive, and renewal lifecycle actions
+- API-backed authenticated frontend at `/app`; no production reminder data is hardcoded there
+- Arabic/English RTL/LTR product interface and responsive marketing site
 
-- responsive Arabic/English marketing experience with RTL/LTR and light/dark modes
-- interactive “create reminder” flow with validation and success feedback
-- Laravel JSON API for creating, listing, editing, and deleting reminders
-- UUID reminder records, indexed expiry queries, API resources, form validation, and feature tests
-
-Authentication, real notification delivery, document extraction, payments, and external
-calendar integrations remain later milestones. They are intentionally not represented as
-complete until provider credentials and end-to-end tests are in place.
+Not implemented: organizations/teams, attachments, Web Push, recurring-instance generation,
+payments/invoices/webhooks, admin console, and complete Spanish/Turkish localization.
 
 ## Monorepo layout
 
@@ -115,7 +115,7 @@ php artisan key:generate
 # point DB_* in .env at your local PostgreSQL, then:
 php artisan migrate --seed
 php artisan serve            # http://localhost:8000
-php artisan horizon          # queue worker (separate terminal)
+php artisan queue:work redis --tries=3 --backoff=60,300,900
 php artisan schedule:work    # due-reminder dispatch (separate terminal)
 ```
 
@@ -139,8 +139,8 @@ cd backend && php artisan test
 # Frontend (unit)
 cd frontend && npm run test
 
-# Frontend (E2E — Playwright)
-cd frontend && npm run test:e2e
+# Frontend type and lint checks
+cd frontend && npm run typecheck && npm run lint
 ```
 
 ## External integrations & secrets
@@ -158,6 +158,12 @@ to be production-ready.
 ## Documentation
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system overview
+- [`docs/API.md`](docs/API.md) — implemented endpoints
+- [`docs/SECURITY.md`](docs/SECURITY.md) — implemented controls and remaining risks
+- [`docs/NOTIFICATIONS.md`](docs/NOTIFICATIONS.md) — scheduler and channel behavior
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — production processes
+- [`docs/TESTING.md`](docs/TESTING.md) — verified test scope
+- [`docs/PAYMENTS.md`](docs/PAYMENTS.md) — explicit payment status
 - [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — tokens, colors, typography
 - [`docs/decisions/`](docs/decisions/) — architecture decision records (ADRs)
 - [`docs/ROADMAP.md`](docs/ROADMAP.md) — what's built and what's next
