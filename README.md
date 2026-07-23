@@ -162,9 +162,25 @@ to be production-ready.
 ## Documentation
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system overview
+- [`docs/API.md`](docs/API.md) — API reference (~108 routes)
+- [`docs/SECURITY.md`](docs/SECURITY.md) — auth, tenancy, encryption, webhooks
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — domains, services, env, enabling integrations
+- [`docs/TESTING.md`](docs/TESTING.md) — backend/unit/E2E and static checks
 - [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — tokens, colors, typography
 - [`docs/decisions/`](docs/decisions/) — architecture decision records (ADRs)
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — what's built and what's next
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — status + honest integration matrix
+- [`docs/screenshots/`](docs/screenshots/) — marketing, dashboard, create-reminder, billing, admin
+
+## Status
+
+Three separate surfaces (marketing / dashboard / admin) share one design system.
+**67 backend tests + 7 Playwright E2E + frontend unit all green**; lint,
+typecheck, build, and Pint clean. Production-ready without external credentials:
+email/in-app reminders, scheduling, ICS export, 2FA, sessions, signed webhooks,
+the admin console, and the marketing site. Payments, OAuth, calendar sync,
+SMS/WhatsApp, web push, and AI extraction ship as **replaceable sandbox/mock
+adapters** and become live once their credentials are supplied — see
+[`docs/ROADMAP.md`](docs/ROADMAP.md) for the full matrix.
 
 ## License
 

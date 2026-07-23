@@ -73,6 +73,40 @@ Legend: ✅ done · 🟡 partial / scaffolded · ⬜ planned
 
 Each milestone is committed and pushed; tests for a milestone pass before the next begins.
 
+## Post-launch priorities (P1–P8) — status
+
+- ✅ **P1 Operational admin** — plans/prices/currencies, coupons, suspend
+  users+orgs, feature flags, languages, FAQs, content/SEO, admin audit trail.
+- ✅ **P2 Marketing site** — all public pages (features, how-it-works, use-cases,
+  legal, blog, FAQ, contact, help) × 4 locales, full SEO + structured data.
+- ✅ **P3 Auth integrations** — TOTP 2FA + recovery codes + sessions (live);
+  Google/Microsoft OAuth architecture (disabled without creds).
+- ✅ **P4 Calendar** — ICS export (live); Google/Outlook sync architecture with
+  encrypted tokens + retry-safe queue (disabled without creds).
+- ✅ **P5 Channels** — preferences, quiet hours, SMS/WhatsApp/AI credits, signed
+  outgoing webhooks (live); web push storage (needs VAPID).
+- ✅ **P6 Billing** — trials, proration, grace-period cancel, dunning, idempotent
+  payment webhook, refunds, coupons, taxes, localized invoices (sandbox gateway).
+- ✅ **P7 Documents & AI** — upload/replace/delete, ownership, signed links,
+  review-before-save, plan-based AI limits (mock extractor).
+- ✅ **P8 Quality** — 67 backend tests, 7 Playwright E2E, frontend unit, lint,
+  typecheck, build, pint, secret scan, audits, docker compose validate.
+
+## Integration status (honest)
+
+**Production-ready now (no external credentials required):** email + in-app
+notifications, reminder scheduling, ICS calendar export, TOTP 2FA, session
+management, outgoing signed webhooks, the full admin console, and the marketing
+site + SEO.
+
+**Architecture complete, running in sandbox/disabled state until real
+credentials are supplied** (documented in `backend/.env.example`): payment
+gateways (Moyasar/Tap/Stripe — sandbox), Google/Microsoft OAuth login,
+Google/Outlook calendar sync, SMS + WhatsApp delivery (mock; credits accounting
+is live), web push (needs VAPID), and the AI document extractor (mock; the
+provider layer is swappable). None is claimed production-live before its keys
+exist.
+
 ## Completion criteria (from the brief)
 
 | # | Criterion | Status |

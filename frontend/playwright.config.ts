@@ -19,9 +19,12 @@ export default defineConfig({
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
+        // Use the environment's pre-installed Chromium (revision may differ from
+        // the @playwright/test pin). Override with PLAYWRIGHT_CHROMIUM_PATH.
         launchOptions: {
           executablePath:
-            process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined,
+            process.env.PLAYWRIGHT_CHROMIUM_PATH ||
+            "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
         },
       },
     },
