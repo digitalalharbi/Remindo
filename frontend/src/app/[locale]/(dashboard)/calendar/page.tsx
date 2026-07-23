@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download } from "lucide-react";
 import { useReminders } from "@/lib/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -10,7 +10,9 @@ import type { Reminder } from "@/lib/types";
 
 export default function CalendarPage() {
   const tn = useTranslations("app.nav");
+  const tce = useTranslations("app.calendarExport");
   const locale = useLocale();
+  const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return { year: now.getFullYear(), month: now.getMonth() };
@@ -56,6 +58,13 @@ export default function CalendarPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold tracking-tight">{tn("calendar")}</h1>
         <div className="flex items-center gap-2">
+          <a
+            href={`${API}/calendar/feed.ics`}
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-sm font-medium hover:bg-muted"
+          >
+            <Download className="size-4" />
+            {tce("export")}
+          </a>
           <button
             onClick={() => move(-1)}
             className="grid size-9 place-items-center rounded-lg border border-border hover:bg-muted"

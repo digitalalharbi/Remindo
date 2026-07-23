@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Contracts\CalendarProvider;
 use App\Contracts\DocumentExtractor;
 use App\Contracts\PaymentGateway;
 use App\Services\AI\MockDocumentExtractor;
+use App\Services\Calendar\NullCalendarProvider;
 use App\Services\Payments\SandboxGateway;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,16 @@ class AppServiceProvider extends ServiceProvider
                 // 'openai' => new OpenAiDocumentExtractor(...),
                 // 'anthropic' => new AnthropicDocumentExtractor(...),
                 default => new MockDocumentExtractor,
+            };
+        });
+
+        // Calendar sync provider. Real Google/Outlook adapters are bound here once
+        // credentials exist; until then the null provider keeps sync safely inert.
+        $this->app->bind(CalendarProvider::class, function () {
+            return match (config('services.calendar.provider')) {
+                // 'google' => new GoogleCalendarProvider(...),
+                // 'outlook' => new OutlookCalendarProvider(...),
+                default => new NullCalendarProvider,
             };
         });
 

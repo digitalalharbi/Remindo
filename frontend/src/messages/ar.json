@@ -252,6 +252,13 @@
       "timezone": "المنطقة الزمنية",
       "save": "حفظ التغييرات",
       "saved": "تم حفظ الإعدادات."
+    },
+    "calendarExport": {
+      "export": "تصدير .ics",
+      "subscribe": "اشترك",
+      "syncUnavailable": "المزامنة الحية تحتاج إعداداً. يمكنك التصدير أو الاشتراك في ملف .ics الآن.",
+      "connectGoogle": "ربط Google Calendar",
+      "connectOutlook": "ربط Outlook"
     }
   },
   "footer": {

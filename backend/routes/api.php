@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Auth\OAuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\Auth\SessionController;
 use App\Http\Controllers\Api\Auth\TwoFactorController;
+use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
@@ -104,6 +105,14 @@ Route::middleware(['auth:sanctum', 'tenant', 'not_suspended'])->group(function (
     Route::get('/subscription', [SubscriptionController::class, 'show']);
     Route::post('/subscription', [SubscriptionController::class, 'subscribe']);
     Route::delete('/subscription', [SubscriptionController::class, 'cancel']);
+
+    // Calendar — ICS export always works; provider sync stays inert without creds
+    Route::get('/calendar/connections', [CalendarController::class, 'connections']);
+    Route::get('/calendar/feed.ics', [CalendarController::class, 'icsFeed']);
+    Route::get('/calendar/reminders/{reminder}.ics', [CalendarController::class, 'icsForReminder']);
+    Route::post('/calendar/connect/{provider}', [CalendarController::class, 'connect']);
+    Route::delete('/calendar/connect/{provider}', [CalendarController::class, 'disconnect']);
+    Route::post('/calendar/sync/{reminder}', [CalendarController::class, 'sync']);
 
     // Documents + AI extraction (review-before-save; never auto-applied)
     Route::get('/documents', [DocumentController::class, 'index']);

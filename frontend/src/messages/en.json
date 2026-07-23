@@ -252,6 +252,13 @@
       "timezone": "Time zone",
       "save": "Save changes",
       "saved": "Settings saved."
+    },
+    "calendarExport": {
+      "export": "Export .ics",
+      "subscribe": "Subscribe",
+      "syncUnavailable": "Live calendar sync needs setup. You can export or subscribe to an .ics feed today.",
+      "connectGoogle": "Connect Google Calendar",
+      "connectOutlook": "Connect Outlook"
     }
   },
   "footer": {

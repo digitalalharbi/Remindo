@@ -35,6 +35,11 @@ return [
         ],
     ],
 
+    // Calendar sync provider: null (disabled) | google | outlook.
+    'calendar' => [
+        'provider' => env('CALENDAR_PROVIDER', 'null'),
+    ],
+
     // OAuth (social login). Buttons are hidden until both id and secret are set.
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),

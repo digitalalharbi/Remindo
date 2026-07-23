@@ -252,6 +252,13 @@
       "timezone": "Saat dilimi",
       "save": "Değişiklikleri kaydet",
       "saved": "Ayarlar kaydedildi."
+    },
+    "calendarExport": {
+      "export": ".ics dışa aktar",
+      "subscribe": "Abone ol",
+      "syncUnavailable": "Canlı takvim senkronizasyonu kurulum gerektirir. Bugün .ics akışını dışa aktarabilir veya abone olabilirsiniz.",
+      "connectGoogle": "Google Calendar bağla",
+      "connectOutlook": "Outlook bağla"
     }
   },
   "footer": {

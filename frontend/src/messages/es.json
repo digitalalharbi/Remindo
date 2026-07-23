@@ -252,6 +252,13 @@
       "timezone": "Zona horaria",
       "save": "Guardar cambios",
       "saved": "Ajustes guardados."
+    },
+    "calendarExport": {
+      "export": "Exportar .ics",
+      "subscribe": "Suscribirse",
+      "syncUnavailable": "La sincronización en vivo requiere configuración. Hoy puedes exportar o suscribirte a un feed .ics.",
+      "connectGoogle": "Conectar Google Calendar",
+      "connectOutlook": "Conectar Outlook"
     }
   },
   "footer": {
