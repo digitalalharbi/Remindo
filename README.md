@@ -29,6 +29,20 @@ A user should be able to create their first reminder in **under 30 seconds**.
 
 Remindo is **not** a general calendar and **not** a complex company-management system.
 
+## Current build milestone
+
+The repository currently contains the production foundation and the first working product
+slice:
+
+- responsive Arabic/English marketing experience with RTL/LTR and light/dark modes
+- interactive “create reminder” flow with validation and success feedback
+- Laravel JSON API for creating, listing, editing, and deleting reminders
+- UUID reminder records, indexed expiry queries, API resources, form validation, and feature tests
+
+Authentication, real notification delivery, document extraction, payments, and external
+calendar integrations remain later milestones. They are intentionally not represented as
+complete until provider credentials and end-to-end tests are in place.
+
 ## Monorepo layout
 
 ```
