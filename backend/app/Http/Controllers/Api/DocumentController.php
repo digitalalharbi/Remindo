@@ -115,6 +115,39 @@ class DocumentController extends Controller
         return ApiResponse::success($result->toArray(), __('ai.extracted'));
     }
 
+    /** Replace the file backing a document (keeps the same document id). */
+    public function replace(Request $request, Document $document): JsonResponse
+    {
+        $request->validate([
+            'file' => ['required', 'file', 'max:10240', 'mimetypes:'.implode(',', self::ALLOWED_MIMES)],
+        ]);
+
+        // Remove the old file, store the new one.
+        Storage::disk($document->disk)->delete($document->path);
+        $file = $request->file('file');
+        $path = $file->store('documents/'.Tenancy::currentId(), 'local');
+
+        $document->update([
+            'path' => $path,
+            'original_name' => $file->getClientOriginalName(),
+            'mime' => $file->getMimeType(),
+            'size' => $file->getSize(),
+            'extraction_status' => 'none',
+            'extracted' => null,
+        ]);
+
+        return ApiResponse::success(['id' => $document->id], __('ai.replaced'));
+    }
+
+    /** Delete a document and its stored file (tenant-scoped by the model). */
+    public function destroy(Document $document): JsonResponse
+    {
+        Storage::disk($document->disk)->delete($document->path);
+        $document->delete();
+
+        return ApiResponse::message('ok');
+    }
+
     /** Issue a short-lived signed URL to download the original file. */
     public function download(Document $document): JsonResponse
     {

@@ -135,6 +135,8 @@ Route::middleware(['auth:sanctum', 'tenant', 'not_suspended'])->group(function (
     Route::get('/documents', [DocumentController::class, 'index']);
     Route::post('/documents', [DocumentController::class, 'store']);
     Route::post('/documents/{document}/extract', [DocumentController::class, 'extract']);
+    Route::post('/documents/{document}/replace', [DocumentController::class, 'replace']);
+    Route::delete('/documents/{document}', [DocumentController::class, 'destroy']);
     Route::get('/documents/{document}/download', [DocumentController::class, 'download']);
     Route::post('/ai/parse', [DocumentController::class, 'parse']);
 });

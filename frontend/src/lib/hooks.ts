@@ -438,6 +438,17 @@ export function useDocuments() {
   });
 }
 
+export function useDeleteDocument() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      await ensureCsrf();
+      await api.delete(`/documents/${id}`);
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["documents"] }),
+  });
+}
+
 /* ── Super Admin ──────────────────────────────────────── */
 
 export function useAdminStats() {

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Upload, FileText, Loader2, Sparkles } from "lucide-react";
-import { useDocuments, useUploadDocument, useExtractDocument } from "@/lib/hooks";
+import { Upload, FileText, Loader2, Sparkles, Trash2 } from "lucide-react";
+import { useDocuments, useUploadDocument, useExtractDocument, useDeleteDocument } from "@/lib/hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/toast";
@@ -24,6 +24,7 @@ export default function DocumentsPage() {
   const { data: documents, isLoading, refetch } = useDocuments();
   const upload = useUploadDocument();
   const extract = useExtractDocument();
+  const del = useDeleteDocument();
   const { toast } = useToast();
   const openCreate = useUiStore((s) => s.openCreateReminder);
   const [dragging, setDragging] = useState(false);
@@ -124,6 +125,13 @@ export default function DocumentsPage() {
                 className="text-xs font-medium text-primary hover:underline"
               >
                 {t("createReminder")}
+              </button>
+              <button
+                onClick={() => del.mutate(d.id)}
+                className="text-danger hover:opacity-70"
+                aria-label="Delete"
+              >
+                <Trash2 className="size-4" />
               </button>
             </div>
           ))}
