@@ -17,9 +17,13 @@ class StoreReminderRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:160'],
             'expires_at' => ['required', 'date'],
-            'remind_days_before' => ['required', 'integer', 'min:0', 'max:3650'],
-            'channel' => ['required', Rule::in(['email', 'in_app', 'web_push'])],
             'category' => ['nullable', 'string', 'max:64'],
+            'notes' => ['nullable', 'string', 'max:5000'],
+            'priority' => ['nullable', Rule::in(['low', 'normal', 'high', 'critical'])],
+            'recurrence' => ['nullable', Rule::in(['none', 'daily', 'weekly', 'monthly', 'yearly'])],
+            'schedules' => ['required', 'array', 'min:1', 'max:10'],
+            'schedules.*.scheduled_at' => ['required', 'date'],
+            'schedules.*.channel' => ['required', Rule::in(['email', 'in_app', 'sms', 'whatsapp'])],
         ];
     }
 }

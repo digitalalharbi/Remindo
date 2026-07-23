@@ -1,0 +1,3 @@
+{{ $mailBody }}
+
+Remindo
