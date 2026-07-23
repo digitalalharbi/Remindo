@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\PublicController;
 use App\Http\Controllers\Api\ReminderController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TagController;
@@ -25,6 +26,8 @@ Route::get('/health', fn () => ApiResponse::success(['status' => 'ok', 'service'
 
 // ── Public ────────────────────────────────────────────────
 Route::get('/plans', [PlanController::class, 'index']);
+Route::get('/faqs', [PublicController::class, 'faqs']);
+Route::post('/contact', [PublicController::class, 'contact'])->middleware('throttle:5,1');
 
 // ── Auth (guest) ──────────────────────────────────────────
 Route::prefix('auth')->group(function () {

@@ -256,7 +256,9 @@
     "terms": "Términos",
     "privacy": "Privacidad",
     "help": "Centro de ayuda",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "useCases": "Casos de uso",
+    "cookies": "Cookies"
   },
   "categories": {
     "contracts": "Contratos",

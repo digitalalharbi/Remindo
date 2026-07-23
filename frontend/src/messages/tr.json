@@ -256,7 +256,9 @@
     "terms": "Koşullar",
     "privacy": "Gizlilik",
     "help": "Yardım merkezi",
-    "rights": "Tüm hakları saklıdır."
+    "rights": "Tüm hakları saklıdır.",
+    "useCases": "Kullanım alanları",
+    "cookies": "Çerezler"
   },
   "categories": {
     "contracts": "Sözleşmeler",

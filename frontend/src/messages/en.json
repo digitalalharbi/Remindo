@@ -256,7 +256,9 @@
     "terms": "Terms",
     "privacy": "Privacy",
     "help": "Help center",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "useCases": "Use cases",
+    "cookies": "Cookies"
   },
   "categories": {
     "contracts": "Contracts",
