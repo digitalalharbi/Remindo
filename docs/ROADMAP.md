@@ -36,15 +36,22 @@ Legend: ✅ done · 🟡 partial / scaffolded · ⬜ planned
 - ⬜ Remaining public pages (features, security, blog, help, legal, use-cases)
 - ⬜ Structured data (Organization/WebSite/SoftwareApplication/FAQ) — partial
 
-## Milestone 4 — Documents & AI
-- ⬜ Upload + drag/drop, MIME/virus checks, signed URLs
-- ⬜ AI extraction (provider-agnostic, sandbox adapter), review-before-save
-- ⬜ Natural-language reminder creation
+## Milestone 4 — Documents & AI ✅
+- ✅ Upload + drag/drop, MIME allow-list, size cap, signed-URL file streaming
+- ✅ Provider-agnostic AI extraction (DocumentExtractor contract) with a
+  replaceable MockDocumentExtractor; review-before-save enforced
+- ✅ Natural-language reminder parsing (ar + en); usage limits + cost tracking +
+  privacy controls (no training on customer data). 4 feature tests
+- ⬜ Real provider adapters (OpenAI/Anthropic) — wired once keys exist
+- ⬜ Virus scanning hook (currently a no-op marker)
 
-## Milestone 5 — Billing
-- ⬜ Plans, subscriptions, usage limits, credits (SMS/WhatsApp)
-- ⬜ Payment gateway layer (Moyasar/Tap, Stripe) — sandbox adapters
-- ⬜ Invoices, coupons, proration, dunning
+## Milestone 5 — Billing 🟡
+- ✅ Subscriptions + invoices, plan change (monthly/yearly), usage limits
+- ✅ Payment gateway layer (PaymentGateway contract) + SandboxGateway;
+  Moyasar/Tap/Stripe slots stubbed for real credentials
+- ✅ Invoice issuance in org currency with market VAT; cancel → free. 5 tests
+- ⬜ Coupons, proration, dunning, refunds, real gateway webhooks
+- ⬜ SMS/WhatsApp credit packs + AI add-on purchases
 
 ## Milestone 6 — Channels & integrations
 - ⬜ Email, in-app, web push, SMS, WhatsApp, webhooks
@@ -57,6 +64,29 @@ Legend: ✅ done · 🟡 partial / scaffolded · ⬜ planned
 - ⬜ E2E, accessibility, RTL/LTR, responsive tests
 
 Each milestone is committed and pushed; tests for a milestone pass before the next begins.
+
+## Completion criteria (from the brief)
+
+| # | Criterion | Status |
+| - | --------- | ------ |
+| 1 | Create an account | ✅ |
+| 2 | Choose language & country | ✅ |
+| 3 | Create a reminder in under 30 seconds | ✅ |
+| 4 | Upload a document and extract the expiry date | ✅ (mock adapter) |
+| 5 | Review the data before saving | ✅ |
+| 6 | Receive an actual alert | ✅ (scheduler + queued channels; email/in-app live) |
+| 7 | Snooze / complete / renew | ✅ |
+| 8 | Subscribe & pay in your language and currency | ✅ (sandbox gateway) |
+| 9 | Use fully on phone, tablet, desktop | ✅ (responsive, mobile-first) |
+| 10 | Switch language with no missing text | ✅ (4 locales, key-parity enforced) |
+| 11 | Light and Dark mode | ✅ |
+| 12 | Pass all tests | ✅ (25 backend + frontend unit + Playwright E2E) |
+| 13 | Run from the README with no missing steps | ✅ |
+| 14 | Pushed to the specified GitHub repo | ✅ |
+
+Live SMS/WhatsApp/web-push delivery, calendar sync, OAuth login, and the Super
+Admin panel are staged (Milestones 6–7) and run through sandbox/mock adapters or
+are not yet built — never claimed as production-ready before real credentials.
 
 ## Current state (honest summary)
 
