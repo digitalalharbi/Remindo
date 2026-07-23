@@ -21,7 +21,9 @@
     "light": "فاتح",
     "dark": "داكن",
     "system": "تلقائي",
-    "openDashboard": "فتح لوحة التحكم"
+    "openDashboard": "فتح لوحة التحكم",
+    "previewMode": "الوضع التجريبي",
+    "previewNote": "بيانات تجريبية · بعض التكاملات وهمية"
   },
   "nav": {
     "product": "المنتج",
@@ -112,7 +114,8 @@
     "verify": "تحقّق",
     "useRecoveryCode": "استخدم رمز استرداد",
     "recoveryCode": "رمز الاسترداد",
-    "continueWith": "المتابعة عبر {provider}"
+    "continueWith": "المتابعة عبر {provider}",
+    "tryDemo": "تجربة الحساب التجريبي"
   },
   "app": {
     "nav": {
@@ -315,7 +318,8 @@
       "flags": "مفاتيح الميزات",
       "languages": "اللغات",
       "faqs": "الأسئلة الشائعة",
-      "content": "المحتوى وSEO"
+      "content": "المحتوى وSEO",
+      "mailLog": "سجل البريد"
     },
     "stats": {
       "users": "المستخدمون",
@@ -381,6 +385,15 @@
       "description": "الوصف",
       "saved": "تم الحفظ.",
       "reason": "السبب (اختياري)"
+    },
+    "mail": {
+      "title": "سجل البريد",
+      "subtitle": "نسخ من البريد الصادر (بيئة المعاينة)",
+      "to": "إلى",
+      "subject": "الموضوع",
+      "from": "من",
+      "selectHint": "اختر رسالة لقراءتها",
+      "empty": "لم يُلتقط أي بريد بعد"
     }
   },
   "security": {

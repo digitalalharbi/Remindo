@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PlanController;
+use App\Http\Controllers\Api\PreviewController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\PublicController;
 use App\Http\Controllers\Api\ReminderController;
@@ -28,9 +29,14 @@ use App\Http\Controllers\Api\Webhooks\PaymentWebhookController;
 use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/health', fn () => ApiResponse::success(['status' => 'ok', 'service' => 'remindo-api']));
+Route::get('/health', fn () => ApiResponse::success([
+    'status' => 'ok',
+    'service' => 'remindo-api',
+    'preview' => (bool) config('preview.enabled'),
+]));
 
 // ── Public ────────────────────────────────────────────────
+Route::get('/preview', [PreviewController::class, 'status']);
 Route::get('/plans', [PlanController::class, 'index']);
 Route::get('/faqs', [PublicController::class, 'faqs']);
 Route::post('/contact', [PublicController::class, 'contact'])->middleware('throttle:5,1');
@@ -172,6 +178,10 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
 
     Route::get('/invoices', [AdminController::class, 'invoices']);
     Route::post('/invoices/{invoice}/refund', [AdminController::class, 'refund']);
+
+    // Preview mailbox — captured outgoing email (preview environment only).
+    Route::get('/mail-log', [PreviewController::class, 'mailLog']);
+    Route::get('/mail-log/{mailPreview}', [PreviewController::class, 'mailShow']);
 
     // Content management
     Route::get('/flags', [AdminContentController::class, 'flags']);

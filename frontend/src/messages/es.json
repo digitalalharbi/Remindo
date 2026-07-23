@@ -21,7 +21,9 @@
     "light": "Claro",
     "dark": "Oscuro",
     "system": "Sistema",
-    "openDashboard": "Abrir panel"
+    "openDashboard": "Abrir panel",
+    "previewMode": "Modo de vista previa",
+    "previewNote": "Datos de prueba · algunas integraciones son simuladas"
   },
   "nav": {
     "product": "Producto",
@@ -112,7 +114,8 @@
     "verify": "Verificar",
     "useRecoveryCode": "Usar un código de recuperación",
     "recoveryCode": "Código de recuperación",
-    "continueWith": "Continuar con {provider}"
+    "continueWith": "Continuar con {provider}",
+    "tryDemo": "Probar la cuenta demo"
   },
   "app": {
     "nav": {
@@ -315,7 +318,8 @@
       "flags": "Feature flags",
       "languages": "Idiomas",
       "faqs": "Preguntas frecuentes",
-      "content": "Contenido y SEO"
+      "content": "Contenido y SEO",
+      "mailLog": "Registro de correo"
     },
     "stats": {
       "users": "Usuarios",
@@ -381,6 +385,15 @@
       "description": "Descripción",
       "saved": "Guardado.",
       "reason": "Motivo (opcional)"
+    },
+    "mail": {
+      "title": "Registro de correo",
+      "subtitle": "Correo saliente capturado (entorno de vista previa)",
+      "to": "Para",
+      "subject": "Asunto",
+      "from": "De",
+      "selectHint": "Selecciona un mensaje para leerlo",
+      "empty": "Aún no se ha capturado ningún correo"
     }
   },
   "security": {

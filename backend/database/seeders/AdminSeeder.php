@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
             ['email' => 'admin@remindo.me'],
             [
                 'name' => 'Remindo Admin',
-                'password' => 'password123',
+                'password' => env('ADMIN_SEED_PASSWORD', 'AdminPass123!'),
                 'locale' => 'en',
                 'country' => 'SA',
                 'timezone' => 'Asia/Riyadh',

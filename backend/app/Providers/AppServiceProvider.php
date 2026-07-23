@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Contracts\CalendarProvider;
 use App\Contracts\DocumentExtractor;
 use App\Contracts\PaymentGateway;
+use App\Listeners\CaptureMailPreview;
 use App\Services\AI\MockDocumentExtractor;
 use App\Services\Calendar\NullCalendarProvider;
 use App\Services\Payments\SandboxGateway;
+use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use SocialiteProviders\Manager\SocialiteWasCalled;
@@ -59,5 +61,9 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(function (SocialiteWasCalled $event) {
             $event->extendSocialite('microsoft', Provider::class);
         });
+
+        // Capture outgoing mail into the preview mailbox (Admin → Mail log) when
+        // preview capture is enabled. Inert otherwise.
+        Event::listen(MessageSending::class, CaptureMailPreview::class);
     }
 }

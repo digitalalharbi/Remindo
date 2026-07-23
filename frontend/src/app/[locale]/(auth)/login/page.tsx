@@ -19,6 +19,9 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+const PREVIEW = process.env.NEXT_PUBLIC_PREVIEW_MODE === "true";
+const DEMO_EMAIL = process.env.NEXT_PUBLIC_DEMO_EMAIL ?? "demo@remindo.me";
+const DEMO_PASSWORD = process.env.NEXT_PUBLIC_DEMO_PASSWORD ?? "DemoPass123!";
 
 export default function LoginPage() {
   const t = useTranslations("auth");
@@ -49,6 +52,9 @@ export default function LoginPage() {
       /* surfaced below */
     }
   };
+
+  const tryDemo = () =>
+    onSubmit({ email: DEMO_EMAIL, password: DEMO_PASSWORD });
 
   const submitCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -162,6 +168,19 @@ export default function LoginPage() {
         <Button type="submit" size="lg" className="w-full" disabled={login.isPending}>
           {login.isPending ? "…" : t("submitLogin")}
         </Button>
+
+        {PREVIEW && (
+          <Button
+            type="button"
+            variant="secondary"
+            size="lg"
+            className="w-full"
+            onClick={tryDemo}
+            disabled={login.isPending}
+          >
+            {t("tryDemo")}
+          </Button>
+        )}
       </form>
 
       <p className="mt-6 text-center text-sm text-muted-foreground">

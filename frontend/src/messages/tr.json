@@ -21,7 +21,9 @@
     "light": "Açık",
     "dark": "Koyu",
     "system": "Sistem",
-    "openDashboard": "Panele git"
+    "openDashboard": "Panele git",
+    "previewMode": "Önizleme Modu",
+    "previewNote": "Deneme verileri · bazı entegrasyonlar taklittir"
   },
   "nav": {
     "product": "Ürün",
@@ -112,7 +114,8 @@
     "verify": "Doğrula",
     "useRecoveryCode": "Kurtarma kodu kullan",
     "recoveryCode": "Kurtarma kodu",
-    "continueWith": "{provider} ile devam et"
+    "continueWith": "{provider} ile devam et",
+    "tryDemo": "Demo hesabını dene"
   },
   "app": {
     "nav": {
@@ -315,7 +318,8 @@
       "flags": "Özellik bayrakları",
       "languages": "Diller",
       "faqs": "SSS",
-      "content": "İçerik ve SEO"
+      "content": "İçerik ve SEO",
+      "mailLog": "Posta günlüğü"
     },
     "stats": {
       "users": "Kullanıcılar",
@@ -381,6 +385,15 @@
       "description": "Açıklama",
       "saved": "Kaydedildi.",
       "reason": "Neden (isteğe bağlı)"
+    },
+    "mail": {
+      "title": "Posta günlüğü",
+      "subtitle": "Yakalanan giden e-posta (önizleme ortamı)",
+      "to": "Kime",
+      "subject": "Konu",
+      "from": "Kimden",
+      "selectHint": "Okumak için bir mesaj seçin",
+      "empty": "Henüz e-posta yakalanmadı"
     }
   },
   "security": {

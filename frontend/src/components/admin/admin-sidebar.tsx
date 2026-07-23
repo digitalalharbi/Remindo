@@ -13,6 +13,7 @@ import {
   HelpCircle,
   FileEdit,
   ScrollText,
+  Mail,
   ArrowLeft,
 } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
@@ -30,6 +31,7 @@ const ITEMS = [
   { href: "/admin/faqs", key: "faqs", icon: HelpCircle },
   { href: "/admin/content", key: "content", icon: FileEdit },
   { href: "/admin/audit-logs", key: "auditLogs", icon: ScrollText },
+  { href: "/admin/mail-log", key: "mailLog", icon: Mail },
 ];
 
 export function AdminSidebar({ onNavigate }: { onNavigate?: () => void }) {

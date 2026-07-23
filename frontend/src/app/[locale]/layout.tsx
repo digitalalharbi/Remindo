@@ -6,6 +6,7 @@ import { setRequestLocale } from "next-intl/server";
 import { routing, isRtl } from "@/i18n/routing";
 import { Providers } from "@/components/providers";
 import { ToastProvider } from "@/components/ui/toast";
+import { PreviewBadge } from "@/components/preview-badge";
 import "../globals.css";
 
 const inter = Inter({
@@ -89,6 +90,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <Providers locale={locale}>
             <ToastProvider>{children}</ToastProvider>
+            <PreviewBadge />
           </Providers>
         </NextIntlClientProvider>
       </body>

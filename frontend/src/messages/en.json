@@ -21,7 +21,9 @@
     "light": "Light",
     "dark": "Dark",
     "system": "System",
-    "openDashboard": "Open dashboard"
+    "openDashboard": "Open dashboard",
+    "previewMode": "Preview Mode",
+    "previewNote": "Sandbox data · some integrations are mocked"
   },
   "nav": {
     "product": "Product",
@@ -112,7 +114,8 @@
     "verify": "Verify",
     "useRecoveryCode": "Use a recovery code",
     "recoveryCode": "Recovery code",
-    "continueWith": "Continue with {provider}"
+    "continueWith": "Continue with {provider}",
+    "tryDemo": "Try the demo account"
   },
   "app": {
     "nav": {
@@ -315,7 +318,8 @@
       "flags": "Feature flags",
       "languages": "Languages",
       "faqs": "FAQs",
-      "content": "Content & SEO"
+      "content": "Content & SEO",
+      "mailLog": "Mail log"
     },
     "stats": {
       "users": "Users",
@@ -381,6 +385,15 @@
       "description": "Description",
       "saved": "Saved.",
       "reason": "Reason (optional)"
+    },
+    "mail": {
+      "title": "Mail log",
+      "subtitle": "Captured outgoing email (preview environment)",
+      "to": "To",
+      "subject": "Subject",
+      "from": "From",
+      "selectHint": "Select a message to read it",
+      "empty": "No email captured yet"
     }
   },
   "security": {
