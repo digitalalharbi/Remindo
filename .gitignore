@@ -48,3 +48,4 @@ yarn-error.log
 /infrastructure/data/
 /frontend/e2e/__screenshots__/
 /frontend/test-results/
+dump.rdb
