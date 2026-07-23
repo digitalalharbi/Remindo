@@ -24,7 +24,7 @@ test("capture marketing", async ({ page }) => {
 test("capture admin", async ({ page }) => {
   await page.goto("/en/login");
   await page.getByLabel("Email").fill("admin@remindo.me");
-  await page.getByLabel("Password", { exact: true }).fill("password123");
+  await page.getByLabel("Password", { exact: true }).fill("AdminPass123!");
   await page.getByRole("button", { name: /sign in/i }).click();
   await page.waitForURL(/\/en\/dashboard/, { timeout: 15000 });
   await page.goto("/en/admin");
