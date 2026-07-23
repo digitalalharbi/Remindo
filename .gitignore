@@ -46,3 +46,6 @@ yarn-error.log
 
 # Docker
 /infrastructure/data/
+/frontend/e2e/__screenshots__/
+/frontend/test-results/
+dump.rdb

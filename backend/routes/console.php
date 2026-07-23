@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Services\Payments\BillingService;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+// Dispatch due reminder notifications every minute.
+Schedule::command('reminders:dispatch-due')->everyMinute()->withoutOverlapping();
+
+// Downgrade subscriptions whose cancellation grace period has ended (hourly).
+Schedule::call(function () {
+    app(BillingService::class)->downgradeExpired();
+})->hourly()->name('billing:downgrade-expired')->withoutOverlapping();

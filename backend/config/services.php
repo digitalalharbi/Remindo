@@ -35,4 +35,42 @@ return [
         ],
     ],
 
+    // Calendar sync provider: null (disabled) | google | outlook.
+    'calendar' => [
+        'provider' => env('CALENDAR_PROVIDER', 'null'),
+    ],
+
+    // Metered notification channels — mock until real credentials are supplied.
+    'sms' => ['provider' => env('SMS_PROVIDER', 'mock'), 'key' => env('SMS_API_KEY')],
+    'whatsapp' => ['provider' => env('WHATSAPP_PROVIDER', 'mock'), 'key' => env('WHATSAPP_API_KEY')],
+    'push' => [
+        'vapid_public' => env('VAPID_PUBLIC_KEY'),
+        'vapid_private' => env('VAPID_PRIVATE_KEY'),
+        'vapid_subject' => env('VAPID_SUBJECT', 'mailto:hello@remindo.me'),
+    ],
+
+    // OAuth (social login). Buttons are hidden until both id and secret are set.
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL').'/api/auth/oauth/google/callback'),
+    ],
+    'microsoft' => [
+        'client_id' => env('MICROSOFT_CLIENT_ID'),
+        'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
+        'redirect' => env('MICROSOFT_REDIRECT_URI', env('APP_URL').'/api/auth/oauth/microsoft/callback'),
+    ],
+
+    // Payments — provider selected here; adapters bound in AppServiceProvider.
+    // sandbox | moyasar | tap | stripe
+    'payments' => [
+        'provider' => env('PAYMENTS_PROVIDER', 'sandbox'),
+        'moyasar' => ['secret' => env('MOYASAR_SECRET_KEY')],
+        'tap' => ['secret' => env('TAP_SECRET_KEY')],
+        'stripe' => [
+            'secret' => env('STRIPE_SECRET_KEY'),
+            'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        ],
+    ],
+
 ];

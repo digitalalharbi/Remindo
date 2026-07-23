@@ -42,13 +42,22 @@ Remindo is **not** a general calendar and **not** a complex company-management s
 └── README.md
 ```
 
-### Domains
+### Three separate experiences
 
-| Domain            | Purpose            |
-| ----------------- | ------------------ |
-| `remindo.me`      | Public marketing site |
-| `app.remindo.me`  | The web app         |
-| `api.remindo.me`  | The JSON API        |
+Remindo is deliberately split into three distinct products that share only the
+design system (colors, fonts, primitives) — never a layout:
+
+| Surface | Domain (prod) | Local path | Layout |
+| ------- | ------------- | ---------- | ------ |
+| Marketing site | `remindo.me` | `/{locale}` (marketing group) | `MarketingLayout` |
+| Auth | `app.remindo.me/login` | `/{locale}/login`, `/register` | `AuthLayout` |
+| User dashboard | `app.remindo.me` | `/{locale}/dashboard`, `/reminders`, … | `DashboardLayout` |
+| Super Admin | `admin.remindo.me` / `/admin` | `/{locale}/admin` | `AdminLayout` |
+| API | `api.remindo.me` | `:8000/api` | — |
+
+The marketing site never renders the dashboard; the dashboard never shows
+marketing content. Access to `/dashboard` requires a session; `/admin` requires
+a super-admin account.
 
 ### Languages
 
@@ -84,12 +93,28 @@ docker compose exec backend php artisan migrate --seed
 
 Then open:
 
-- Marketing / app → http://localhost:3000
+- Marketing site → http://localhost:3000/en (or `/ar`, `/es`, `/tr`)
+- User dashboard → http://localhost:3000/en/dashboard
+- Super Admin → http://localhost:3000/en/admin
 - API → http://localhost:8000/api
+
+**Seeded accounts** (local/dev/preview — passwords are env-driven via
+`DEMO_SEED_PASSWORD` / `ADMIN_SEED_PASSWORD`; defaults shown):
+
+| Account | Email | Password | Access |
+| ------- | ----- | -------- | ------ |
+| Demo user | `demo@remindo.me` | `DemoPass123!` | Dashboard |
+| Super admin | `admin@remindo.me` | `AdminPass123!` | Dashboard + `/admin` |
+
+> **Public preview / live demo:** see [`docs/LIVE_PREVIEW.md`](docs/LIVE_PREVIEW.md)
+> for the reproducible deploy recipe, required env vars, preview accounts, demo
+> seed data, and the honest status of what runs live vs. sandbox. Preview mode
+> (`PREVIEW_MODE=true`) adds a "Preview Mode" badge, a "Try demo account" button,
+> and an online mailbox at **Admin → Mail log**.
 
 ## Quick start (local, no Docker)
 
-You need PHP 8.3+, Composer, Node 20+, PostgreSQL 16, Redis.
+You need PHP 8.4+, Composer, Node 20+, PostgreSQL 16, Redis.
 
 ### Backend
 
@@ -144,9 +169,26 @@ to be production-ready.
 ## Documentation
 
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system overview
+- [`docs/API.md`](docs/API.md) — API reference (~108 routes)
+- [`docs/SECURITY.md`](docs/SECURITY.md) — auth, tenancy, encryption, webhooks
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — domains, services, env, enabling integrations
+- [`docs/LIVE_PREVIEW.md`](docs/LIVE_PREVIEW.md) — public preview deploy recipe, env vars, demo accounts
+- [`docs/TESTING.md`](docs/TESTING.md) — backend/unit/E2E and static checks
 - [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — tokens, colors, typography
 - [`docs/decisions/`](docs/decisions/) — architecture decision records (ADRs)
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — what's built and what's next
+- [`docs/ROADMAP.md`](docs/ROADMAP.md) — status + honest integration matrix
+- [`docs/screenshots/`](docs/screenshots/) — marketing, dashboard, create-reminder, billing, admin
+
+## Status
+
+Three separate surfaces (marketing / dashboard / admin) share one design system.
+**67 backend tests + 7 Playwright E2E + frontend unit all green**; lint,
+typecheck, build, and Pint clean. Production-ready without external credentials:
+email/in-app reminders, scheduling, ICS export, 2FA, sessions, signed webhooks,
+the admin console, and the marketing site. Payments, OAuth, calendar sync,
+SMS/WhatsApp, web push, and AI extraction ship as **replaceable sandbox/mock
+adapters** and become live once their credentials are supplied — see
+[`docs/ROADMAP.md`](docs/ROADMAP.md) for the full matrix.
 
 ## License
 

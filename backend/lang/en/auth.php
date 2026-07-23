@@ -1,0 +1,31 @@
+<?php
+
+return [
+    'failed' => 'These credentials do not match our records.',
+    'password' => 'The provided password is incorrect.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+
+    'unauthenticated' => 'You must be signed in to do that.',
+    'forbidden' => 'You are not allowed to do that.',
+    'registered' => 'Welcome to Remindo. Your account is ready.',
+    'logged_in' => 'Signed in successfully.',
+    'logged_out' => 'Signed out.',
+    'email_verified' => 'Your email has been verified.',
+    'verification_sent' => 'A verification link has been sent to your email.',
+    'reset_link_sent' => 'We have emailed your password reset link.',
+    'password_reset' => 'Your password has been reset.',
+    'invalid_token' => 'This link is invalid or has expired.',
+    'two_factor_required' => 'Enter your authentication code to continue.',
+    'two_factor_invalid' => 'That code is not valid. Please try again.',
+    'two_factor_enabled' => 'Two-factor authentication is on.',
+    'two_factor_disabled' => 'Two-factor authentication is off.',
+    'two_factor_expired' => 'Your sign-in expired. Please log in again.',
+    'session_revoked' => 'Session signed out.',
+    'other_sessions_revoked' => 'All other sessions were signed out.',
+    'cannot_revoke_current' => 'You cannot revoke your current session.',
+    'oauth_unavailable' => 'This sign-in method is not available right now.',
+    'new_login_subject' => 'New sign-in to your Remindo account',
+    'new_login_line' => 'We noticed a new sign-in to your account.',
+    'new_login_ip' => 'IP address: :ip',
+    'new_login_hint' => 'If this wasn\'t you, change your password and review your active sessions.',
+];

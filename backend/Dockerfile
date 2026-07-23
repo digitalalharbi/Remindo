@@ -1,5 +1,5 @@
-# Remindo backend — Laravel 12 on PHP 8.3 (FrankenPHP-free, simple built-in server for dev/CI).
-FROM php:8.3-cli-alpine
+# Remindo backend — Laravel 12 on PHP 8.4 (FrankenPHP-free, simple built-in server for dev/CI).
+FROM php:8.4-cli-alpine
 
 RUN apk add --no-cache \
         postgresql-dev libpng-dev libzip-dev icu-dev oniguruma-dev linux-headers $PHPIZE_DEPS \

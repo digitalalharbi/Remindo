@@ -4,13 +4,15 @@ namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Keeps the Unit test suite present (git does not track empty directories, so
+ * without a tracked file here CI's fresh clone has no tests/Unit and PHPUnit
+ * aborts with "Test directory not found").
+ */
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
+    public function test_arithmetic_sanity(): void
     {
-        $this->assertTrue(true);
+        $this->assertSame(4, 2 + 2);
     }
 }

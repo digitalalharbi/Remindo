@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────────────────────
+   Remindo Design System — original tokens.
+   Calm, trustworthy, precise. One accent. Light + Dark.
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  /* Surfaces */
+  --background: 0 0% 100%;
+  --foreground: 222 24% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 24% 12%;
+  --muted: 220 20% 97%;
+  --muted-foreground: 220 12% 46%;
+  --border: 220 16% 90%;
+  --input: 220 16% 90%;
+
+  /* Brand — a calm teal-leaning blue, the single accent */
+  --primary: 224 68% 56%;
+  --primary-foreground: 0 0% 100%;
+  --ring: 224 68% 56%;
+
+  /* State colors — used sparingly, for status only */
+  --success: 158 64% 38%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 30 40% 14%;
+  --danger: 0 72% 51%;
+  --danger-foreground: 0 0% 100%;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: 222 30% 7%;
+  --foreground: 210 20% 96%;
+  --card: 222 26% 10%;
+  --card-foreground: 210 20% 96%;
+  --muted: 220 20% 15%;
+  --muted-foreground: 218 12% 62%;
+  --border: 220 16% 20%;
+  --input: 220 16% 22%;
+
+  --primary: 222 78% 64%;
+  --primary-foreground: 222 40% 8%;
+  --ring: 222 78% 64%;
+
+  --success: 158 58% 46%;
+  --warning: 38 92% 56%;
+  --danger: 0 70% 60%;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-ring: hsl(var(--ring));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
+  --color-danger: hsl(var(--danger));
+  --color-danger-foreground: hsl(var(--danger-foreground));
+
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+
+  /* Inter for Latin; Arabic glyphs fall through to IBM Plex Sans Arabic. */
+  --font-sans: var(--font-inter), var(--font-arabic), system-ui, sans-serif;
+
+  --shadow-xs: 0 1px 2px 0 hsl(222 24% 12% / 0.04);
+  --shadow-sm: 0 1px 3px 0 hsl(222 24% 12% / 0.06), 0 1px 2px -1px hsl(222 24% 12% / 0.06);
+  --shadow-md: 0 4px 12px -2px hsl(222 24% 12% / 0.08), 0 2px 6px -2px hsl(222 24% 12% / 0.05);
+  --shadow-lg: 0 12px 32px -8px hsl(222 24% 12% / 0.12);
+
+  --ease-out-quart: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Focus ring — visible, consistent, keyboard-friendly */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.18);
+  }
+}
+
+/* Quiet, non-distracting motion; respects reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes remindo-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: remindo-fade-up 0.4s var(--ease-out-quart) both;
+}
+
+/* Subtle grid backdrop used behind hero sections */
+.bg-grid {
+  background-image:
+    linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
