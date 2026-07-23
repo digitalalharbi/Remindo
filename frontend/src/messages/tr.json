@@ -278,7 +278,12 @@
       "plans": "Planlar",
       "invoices": "Faturalar",
       "auditLogs": "Denetim kayıtları",
-      "backToApp": "Uygulamaya dön"
+      "backToApp": "Uygulamaya dön",
+      "coupons": "Kuponlar",
+      "flags": "Özellik bayrakları",
+      "languages": "Diller",
+      "faqs": "SSS",
+      "content": "İçerik ve SEO"
     },
     "stats": {
       "users": "Kullanıcılar",
@@ -313,6 +318,37 @@
       "action": "Eylem",
       "user": "Kullanıcı",
       "subject": "Nesne"
+    },
+    "actions": {
+      "create": "Oluştur",
+      "edit": "Düzenle",
+      "save": "Kaydet",
+      "delete": "Sil",
+      "suspend": "Askıya al",
+      "reactivate": "Yeniden etkinleştir",
+      "enabled": "Etkin",
+      "disabled": "Devre dışı",
+      "active": "Aktif",
+      "inactive": "Pasif",
+      "confirmSuspendUser": "Bu kullanıcı askıya alınsın mı? Oturumları hemen sona erer ve giriş yapamaz.",
+      "confirmSuspendOrg": "Bu çalışma alanı askıya alınsın mı? Üyeleri erişimi kaybeder.",
+      "confirmDeletePlan": "Bu plan silinsin mi? Geri alınamaz.",
+      "confirmDeleteCoupon": "Bu kupon silinsin mi?",
+      "confirmDeleteFaq": "Bu SSS silinsin mi?",
+      "newPlan": "Yeni plan",
+      "newCoupon": "Yeni kupon",
+      "newFaq": "Yeni SSS",
+      "code": "Kod",
+      "value": "Değer",
+      "discountType": "Tür",
+      "percent": "Yüzde",
+      "fixed": "Sabit",
+      "question": "Soru",
+      "answer": "Cevap",
+      "key": "Anahtar",
+      "description": "Açıklama",
+      "saved": "Kaydedildi.",
+      "reason": "Neden (isteğe bağlı)"
     }
   }
 }

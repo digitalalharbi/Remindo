@@ -362,6 +362,32 @@ export function useAdminList<T = Record<string, unknown>>(resource: string) {
   });
 }
 
+type AdminWrite = {
+  method: "post" | "patch" | "delete";
+  path: string;
+  body?: unknown;
+};
+
+/** Generic admin write with automatic invalidation of the affected resource lists. */
+export function useAdminAction(invalidate: string[] = []) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ method, path, body }: AdminWrite) => {
+      await ensureCsrf();
+      const { data } = await api.request<ApiEnvelope<unknown>>({
+        method,
+        url: `/admin/${path}`,
+        data: body,
+      });
+      return data.data;
+    },
+    onSuccess: () => {
+      invalidate.forEach((key) => qc.invalidateQueries({ queryKey: ["admin", key] }));
+      qc.invalidateQueries({ queryKey: ["admin", "stats"] });
+    },
+  });
+}
+
 /* ── Categories ───────────────────────────────────────── */
 
 export function useCategories() {

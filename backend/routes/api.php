@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminAccountController;
+use App\Http\Controllers\Api\Admin\AdminContentController;
 use App\Http\Controllers\Api\Admin\AdminController;
+use App\Http\Controllers\Api\Admin\AdminCouponController;
+use App\Http\Controllers\Api\Admin\AdminPlanController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
@@ -33,9 +37,13 @@ Route::prefix('auth')->group(function () {
 });
 
 // ── Authenticated ─────────────────────────────────────────
-Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
+// logout + me stay reachable even when suspended (so the client can recover).
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/auth/me', [AuthController::class, 'me']);
+});
+
+Route::middleware(['auth:sanctum', 'tenant', 'not_suspended'])->group(function () {
     Route::post('/auth/email/verification-notification', [EmailVerificationController::class, 'send'])
         ->middleware('throttle:6,1');
 
@@ -80,11 +88,45 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
 // ── Super Admin (Remindo staff only) ──────────────────────
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
     Route::get('/stats', [AdminController::class, 'stats']);
-    Route::get('/users', [AdminController::class, 'users']);
-    Route::get('/organizations', [AdminController::class, 'organizations']);
-    Route::get('/plans', [AdminController::class, 'plans']);
-    Route::get('/invoices', [AdminController::class, 'invoices']);
     Route::get('/audit-logs', [AdminController::class, 'auditLogs']);
+
+    // Accounts
+    Route::get('/users', [AdminController::class, 'users']);
+    Route::get('/users/{user}', [AdminAccountController::class, 'showUser']);
+    Route::post('/users/{user}/suspend', [AdminAccountController::class, 'suspendUser']);
+    Route::post('/users/{user}/reactivate', [AdminAccountController::class, 'reactivateUser']);
+    Route::get('/organizations', [AdminController::class, 'organizations']);
+    Route::get('/organizations/{organization}', [AdminAccountController::class, 'showOrganization']);
+    Route::post('/organizations/{organization}/suspend', [AdminAccountController::class, 'suspendOrganization']);
+    Route::post('/organizations/{organization}/reactivate', [AdminAccountController::class, 'reactivateOrganization']);
+
+    // Plans + prices
+    Route::get('/plans', [AdminController::class, 'plans']);
+    Route::post('/plans', [AdminPlanController::class, 'store']);
+    Route::patch('/plans/{plan}', [AdminPlanController::class, 'update']);
+    Route::post('/plans/{plan}/toggle', [AdminPlanController::class, 'toggle']);
+    Route::post('/plans/reorder', [AdminPlanController::class, 'reorder']);
+    Route::delete('/plans/{plan}', [AdminPlanController::class, 'destroy']);
+
+    // Coupons
+    Route::get('/coupons', [AdminCouponController::class, 'index']);
+    Route::post('/coupons', [AdminCouponController::class, 'store']);
+    Route::patch('/coupons/{coupon}', [AdminCouponController::class, 'update']);
+    Route::delete('/coupons/{coupon}', [AdminCouponController::class, 'destroy']);
+
+    Route::get('/invoices', [AdminController::class, 'invoices']);
+
+    // Content management
+    Route::get('/flags', [AdminContentController::class, 'flags']);
+    Route::post('/flags', [AdminContentController::class, 'upsertFlag']);
+    Route::get('/languages', [AdminContentController::class, 'languages']);
+    Route::post('/languages/{language}/toggle', [AdminContentController::class, 'toggleLanguage']);
+    Route::get('/faqs', [AdminContentController::class, 'faqs']);
+    Route::post('/faqs', [AdminContentController::class, 'storeFaq']);
+    Route::patch('/faqs/{faq}', [AdminContentController::class, 'updateFaq']);
+    Route::delete('/faqs/{faq}', [AdminContentController::class, 'destroyFaq']);
+    Route::get('/settings', [AdminContentController::class, 'settings']);
+    Route::post('/settings', [AdminContentController::class, 'saveSetting']);
 });
 
 // Signed file streaming (authorized by the signed URL, not the session).

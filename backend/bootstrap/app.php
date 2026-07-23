@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureNotSuspended;
 use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\ResolveTenant;
 use App\Http\Middleware\SecurityHeaders;
@@ -30,6 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'tenant' => ResolveTenant::class,
             'admin' => EnsureSuperAdmin::class,
+            'not_suspended' => EnsureNotSuspended::class,
         ]);
 
         // Localize API responses from the Accept-Language header (guest + auth).

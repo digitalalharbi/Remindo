@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlanResource;
+use App\Models\Coupon;
 use App\Models\Invoice;
 use App\Models\Plan;
 use App\Models\Subscription;
@@ -60,13 +61,22 @@ class SubscriptionController extends Controller
         $data = $request->validate([
             'plan_key' => ['required', Rule::exists('plans', 'key')->where('is_active', true)],
             'interval' => ['required', Rule::in(['monthly', 'yearly'])],
+            'coupon_code' => ['nullable', 'string', 'max:40'],
         ]);
 
         $organization = Tenancy::current();
         $plan = Plan::where('key', $data['plan_key'])->firstOrFail();
 
+        $coupon = null;
+        if (! empty($data['coupon_code'])) {
+            $coupon = Coupon::where('code', strtoupper($data['coupon_code']))->first();
+            if (! $coupon || ! $coupon->isRedeemable()) {
+                return ApiResponse::error(__('billing.invalid_coupon'), 422);
+            }
+        }
+
         try {
-            $this->billing->subscribe($organization, $plan, $data['interval']);
+            $this->billing->subscribe($organization, $plan, $data['interval'], $coupon);
         } catch (RuntimeException $e) {
             return ApiResponse::error(__('billing.payment_failed'), 402);
         }

@@ -4,4 +4,5 @@ return [
     'subscribed' => 'Your plan is active.',
     'canceled' => 'Your subscription has been canceled.',
     'payment_failed' => 'The payment could not be completed. Please try another method.',
+    'invalid_coupon' => 'This coupon is invalid or has expired.',
 ];

@@ -57,6 +57,10 @@ class AuthController extends Controller
             throw ValidationException::withMessages(['email' => __('auth.failed')]);
         }
 
+        if ($user->isSuspended()) {
+            throw ValidationException::withMessages(['email' => __('admin.account_suspended_notice')]);
+        }
+
         Auth::login($user, $request->boolean('remember'));
         if ($request->hasSession()) {
             $request->session()->regenerate();

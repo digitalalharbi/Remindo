@@ -278,7 +278,12 @@
       "plans": "الخطط",
       "invoices": "الفواتير",
       "auditLogs": "سجل النشاط",
-      "backToApp": "العودة للتطبيق"
+      "backToApp": "العودة للتطبيق",
+      "coupons": "الكوبونات",
+      "flags": "مفاتيح الميزات",
+      "languages": "اللغات",
+      "faqs": "الأسئلة الشائعة",
+      "content": "المحتوى وSEO"
     },
     "stats": {
       "users": "المستخدمون",
@@ -313,6 +318,37 @@
       "action": "الإجراء",
       "user": "المستخدم",
       "subject": "العنصر"
+    },
+    "actions": {
+      "create": "إنشاء",
+      "edit": "تعديل",
+      "save": "حفظ",
+      "delete": "حذف",
+      "suspend": "إيقاف",
+      "reactivate": "إعادة تفعيل",
+      "enabled": "مُفعّل",
+      "disabled": "معطّل",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "confirmSuspendUser": "إيقاف هذا المستخدم؟ ستنتهي جلساته فوراً ولن يستطيع الدخول.",
+      "confirmSuspendOrg": "إيقاف مساحة العمل هذه؟ سيفقد أعضاؤها الوصول.",
+      "confirmDeletePlan": "حذف هذه الخطة؟ لا يمكن التراجع.",
+      "confirmDeleteCoupon": "حذف هذا الكوبون؟",
+      "confirmDeleteFaq": "حذف هذا السؤال؟",
+      "newPlan": "خطة جديدة",
+      "newCoupon": "كوبون جديد",
+      "newFaq": "سؤال جديد",
+      "code": "الرمز",
+      "value": "القيمة",
+      "discountType": "النوع",
+      "percent": "نسبة",
+      "fixed": "ثابت",
+      "question": "السؤال",
+      "answer": "الجواب",
+      "key": "المفتاح",
+      "description": "الوصف",
+      "saved": "تم الحفظ.",
+      "reason": "السبب (اختياري)"
     }
   }
 }

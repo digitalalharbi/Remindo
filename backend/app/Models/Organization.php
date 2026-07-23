@@ -16,11 +16,20 @@ class Organization extends Model
     protected $fillable = [
         'name', 'slug', 'type', 'owner_id', 'plan_id',
         'country', 'timezone', 'currency', 'trial_ends_at',
+        'suspended_at', 'suspended_reason',
     ];
 
     protected function casts(): array
     {
-        return ['trial_ends_at' => 'datetime'];
+        return [
+            'trial_ends_at' => 'datetime',
+            'suspended_at' => 'datetime',
+        ];
+    }
+
+    public function isSuspended(): bool
+    {
+        return ! is_null($this->suspended_at);
     }
 
     public function owner(): BelongsTo

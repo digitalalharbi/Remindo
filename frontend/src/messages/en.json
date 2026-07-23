@@ -278,7 +278,12 @@
       "plans": "Plans",
       "invoices": "Invoices",
       "auditLogs": "Audit logs",
-      "backToApp": "Back to app"
+      "backToApp": "Back to app",
+      "coupons": "Coupons",
+      "flags": "Feature flags",
+      "languages": "Languages",
+      "faqs": "FAQs",
+      "content": "Content & SEO"
     },
     "stats": {
       "users": "Users",
@@ -313,6 +318,37 @@
       "action": "Action",
       "user": "User",
       "subject": "Subject"
+    },
+    "actions": {
+      "create": "Create",
+      "edit": "Edit",
+      "save": "Save",
+      "delete": "Delete",
+      "suspend": "Suspend",
+      "reactivate": "Reactivate",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "active": "Active",
+      "inactive": "Inactive",
+      "confirmSuspendUser": "Suspend this user? Their sessions end immediately and they cannot sign in.",
+      "confirmSuspendOrg": "Suspend this workspace? Its members lose access to the app.",
+      "confirmDeletePlan": "Delete this plan? This cannot be undone.",
+      "confirmDeleteCoupon": "Delete this coupon?",
+      "confirmDeleteFaq": "Delete this FAQ?",
+      "newPlan": "New plan",
+      "newCoupon": "New coupon",
+      "newFaq": "New FAQ",
+      "code": "Code",
+      "value": "Value",
+      "discountType": "Type",
+      "percent": "Percent",
+      "fixed": "Fixed",
+      "question": "Question",
+      "answer": "Answer",
+      "key": "Key",
+      "description": "Description",
+      "saved": "Saved.",
+      "reason": "Reason (optional)"
     }
   }
 }

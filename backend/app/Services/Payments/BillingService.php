@@ -3,6 +3,7 @@
 namespace App\Services\Payments;
 
 use App\Contracts\PaymentGateway;
+use App\Models\Coupon;
 use App\Models\Invoice;
 use App\Models\Organization;
 use App\Models\Plan;
@@ -28,11 +29,18 @@ class BillingService
      * Subscribe (or change) an organization to a plan on the given interval.
      * Free plans skip payment; paid plans are charged through the gateway.
      */
-    public function subscribe(Organization $organization, Plan $plan, string $interval = 'monthly'): Subscription
+    public function subscribe(Organization $organization, Plan $plan, string $interval = 'monthly', ?Coupon $coupon = null): Subscription
     {
-        $amount = $interval === 'yearly' ? $plan->price_yearly : $plan->price_monthly;
+        $plan->loadMissing('prices');
+        $base = $interval === 'yearly'
+            ? $plan->yearlyPriceFor($organization->currency)
+            : $plan->monthlyPriceFor($organization->currency);
 
-        return DB::transaction(function () use ($organization, $plan, $interval, $amount) {
+        // Apply a valid coupon to the charge amount.
+        $discount = ($coupon && $coupon->isRedeemable()) ? $coupon->discountFor($base) : 0;
+        $amount = max(0, $base - $discount);
+
+        return DB::transaction(function () use ($organization, $plan, $interval, $amount, $coupon) {
             if ($amount > 0) {
                 $charge = $this->gateway->charge($amount, $organization->currency, [
                     'organization_id' => $organization->id,
@@ -48,6 +56,10 @@ class BillingService
             } else {
                 $reference = null;
                 $provider = $this->gateway->providerName();
+            }
+
+            if ($coupon && $coupon->isRedeemable()) {
+                $coupon->increment('times_redeemed');
             }
 
             $periodEnd = $interval === 'yearly' ? now()->addYear() : now()->addMonth();

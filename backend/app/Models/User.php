@@ -26,6 +26,8 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
         'country',
         'timezone',
         'current_organization_id',
+        'suspended_at',
+        'suspended_reason',
     ];
 
     protected $hidden = [
@@ -44,6 +46,7 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
             'two_factor_secret' => 'encrypted',
             'two_factor_recovery_codes' => 'encrypted:array',
             'is_super_admin' => 'boolean',
+            'suspended_at' => 'datetime',
         ];
     }
 
@@ -68,6 +71,11 @@ class User extends Authenticatable implements HasLocalePreference, MustVerifyEma
     public function hasTwoFactorEnabled(): bool
     {
         return ! is_null($this->two_factor_confirmed_at);
+    }
+
+    public function isSuspended(): bool
+    {
+        return ! is_null($this->suspended_at);
     }
 
     /** Localize notifications/emails to the user's chosen language. */

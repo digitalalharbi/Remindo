@@ -278,7 +278,12 @@
       "plans": "Planes",
       "invoices": "Facturas",
       "auditLogs": "Registros",
-      "backToApp": "Volver a la app"
+      "backToApp": "Volver a la app",
+      "coupons": "Cupones",
+      "flags": "Feature flags",
+      "languages": "Idiomas",
+      "faqs": "Preguntas frecuentes",
+      "content": "Contenido y SEO"
     },
     "stats": {
       "users": "Usuarios",
@@ -313,6 +318,37 @@
       "action": "Acción",
       "user": "Usuario",
       "subject": "Objeto"
+    },
+    "actions": {
+      "create": "Crear",
+      "edit": "Editar",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "suspend": "Suspender",
+      "reactivate": "Reactivar",
+      "enabled": "Activado",
+      "disabled": "Desactivado",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "confirmSuspendUser": "¿Suspender a este usuario? Sus sesiones terminan de inmediato y no podrá iniciar sesión.",
+      "confirmSuspendOrg": "¿Suspender este espacio? Sus miembros pierden el acceso.",
+      "confirmDeletePlan": "¿Eliminar este plan? No se puede deshacer.",
+      "confirmDeleteCoupon": "¿Eliminar este cupón?",
+      "confirmDeleteFaq": "¿Eliminar esta pregunta?",
+      "newPlan": "Nuevo plan",
+      "newCoupon": "Nuevo cupón",
+      "newFaq": "Nueva pregunta",
+      "code": "Código",
+      "value": "Valor",
+      "discountType": "Tipo",
+      "percent": "Porcentaje",
+      "fixed": "Fijo",
+      "question": "Pregunta",
+      "answer": "Respuesta",
+      "key": "Clave",
+      "description": "Descripción",
+      "saved": "Guardado.",
+      "reason": "Motivo (opcional)"
     }
   }
 }
