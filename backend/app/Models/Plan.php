@@ -13,7 +13,7 @@ class Plan extends Model
 
     protected $fillable = [
         'key', 'name', 'description', 'price_monthly', 'price_yearly', 'currency',
-        'reminder_limit', 'user_limit', 'ai_operations_limit', 'features', 'is_active', 'sort_order',
+        'reminder_limit', 'user_limit', 'ai_operations_limit', 'features', 'is_active', 'sort_order', 'trial_days',
     ];
 
     protected function casts(): array

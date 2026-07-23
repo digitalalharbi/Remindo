@@ -13,6 +13,7 @@ class Subscription extends Model
     protected $fillable = [
         'organization_id', 'plan_id', 'interval', 'status', 'provider',
         'provider_reference', 'current_period_start', 'current_period_end', 'canceled_at',
+        'cancel_at_period_end', 'trial_ends_at', 'payment_attempts', 'coupon_id',
     ];
 
     protected function casts(): array
@@ -21,7 +22,19 @@ class Subscription extends Model
             'current_period_start' => 'datetime',
             'current_period_end' => 'datetime',
             'canceled_at' => 'datetime',
+            'trial_ends_at' => 'datetime',
+            'cancel_at_period_end' => 'boolean',
         ];
+    }
+
+    public function onTrial(): bool
+    {
+        return $this->trial_ends_at !== null && $this->trial_ends_at->isFuture();
+    }
+
+    public function inGracePeriod(): bool
+    {
+        return $this->cancel_at_period_end && $this->current_period_end?->isFuture();
     }
 
     public function organization(): BelongsTo

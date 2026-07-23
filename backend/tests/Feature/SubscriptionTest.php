@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Invoice;
 use App\Models\Subscription;
+use App\Services\Payments\BillingService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\CreatesTenants;
 use Tests\TestCase;
@@ -86,7 +87,7 @@ class SubscriptionTest extends TestCase
             ->assertJsonCount(1, 'data.invoices');
     }
 
-    public function test_canceling_reverts_to_free_plan(): void
+    public function test_canceling_enters_a_grace_period_then_downgrades(): void
     {
         [$user, $org] = $this->createUserWithOrganization();
         $this->actingAs($user)->postJson('/api/subscription', [
@@ -96,6 +97,14 @@ class SubscriptionTest extends TestCase
 
         $this->actingAs($user)->deleteJson('/api/subscription')->assertOk();
 
+        // Grace period: still on the paid plan until the period ends.
+        $this->assertEquals('personal', $org->fresh()->plan->key);
+        $sub = Subscription::where('organization_id', $org->id)->first();
+        $this->assertTrue($sub->cancel_at_period_end);
+
+        // After the period ends, the scheduled downgrade drops to free.
+        $sub->update(['current_period_end' => now()->subDay()]);
+        app(BillingService::class)->downgradeExpired();
         $this->assertEquals('free', $org->fresh()->plan->key);
     }
 }

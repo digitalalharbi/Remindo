@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\ReminderController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\TeamController;
+use App\Http\Controllers\Api\Webhooks\PaymentWebhookController;
 use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,9 @@ Route::get('/health', fn () => ApiResponse::success(['status' => 'ok', 'service'
 Route::get('/plans', [PlanController::class, 'index']);
 Route::get('/faqs', [PublicController::class, 'faqs']);
 Route::post('/contact', [PublicController::class, 'contact'])->middleware('throttle:5,1');
+
+// Inbound payment-gateway webhooks (idempotent; signature-verified for real gateways).
+Route::post('/webhooks/payments/{provider}', [PaymentWebhookController::class, 'handle']);
 
 // ── Auth (guest) ──────────────────────────────────────────
 Route::prefix('auth')->group(function () {
@@ -165,6 +169,7 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::delete('/coupons/{coupon}', [AdminCouponController::class, 'destroy']);
 
     Route::get('/invoices', [AdminController::class, 'invoices']);
+    Route::post('/invoices/{invoice}/refund', [AdminController::class, 'refund']);
 
     // Content management
     Route::get('/flags', [AdminContentController::class, 'flags']);

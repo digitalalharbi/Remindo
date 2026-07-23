@@ -10,6 +10,7 @@ use App\Models\Plan;
 use App\Models\Reminder;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Services\Payments\BillingService;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -118,6 +119,20 @@ class AdminController extends Controller
             ]),
             meta: $this->pageMeta($invoices),
         );
+    }
+
+    /** Record a refund against an invoice. */
+    public function refund(Request $request, Invoice $invoice): JsonResponse
+    {
+        $data = $request->validate([
+            'amount' => ['nullable', 'integer', 'min:1', 'max:'.$invoice->total],
+            'reason' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $refund = app(BillingService::class)
+            ->refund($invoice, $data['amount'] ?? null, $data['reason'] ?? null);
+
+        return ApiResponse::success($refund);
     }
 
     public function auditLogs(): JsonResponse

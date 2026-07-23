@@ -50,6 +50,9 @@ class SubscriptionController extends Controller
                 'interval' => $subscription->interval,
                 'status' => $subscription->status,
                 'current_period_end' => $subscription->current_period_end?->toDateString(),
+                'cancel_at_period_end' => $subscription->cancel_at_period_end,
+                'on_trial' => $subscription->onTrial(),
+                'trial_ends_at' => $subscription->trial_ends_at?->toDateString(),
             ] : null,
             'invoices' => $invoices,
         ]);

@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use App\Models\Invoice;
 use App\Models\Organization;
 use App\Models\Plan;
+use App\Models\Refund;
 use App\Models\Subscription;
 use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\DB;
@@ -36,11 +37,20 @@ class BillingService
             ? $plan->yearlyPriceFor($organization->currency)
             : $plan->monthlyPriceFor($organization->currency);
 
-        // Apply a valid coupon to the charge amount.
-        $discount = ($coupon && $coupon->isRedeemable()) ? $coupon->discountFor($base) : 0;
-        $amount = max(0, $base - $discount);
+        $current = Subscription::where('organization_id', $organization->id)
+            ->where('status', 'active')->latest()->first();
 
-        return DB::transaction(function () use ($organization, $plan, $interval, $amount, $coupon) {
+        // Trial: first paid subscription on a plan that offers one — no charge now.
+        $startTrial = $plan->trial_days > 0 && $base > 0
+            && ! Subscription::where('organization_id', $organization->id)->exists();
+
+        // Proration: credit the unused value of the current paid plan against the new charge.
+        $prorationCredit = $this->prorationCredit($current, $organization);
+
+        $discount = ($coupon && $coupon->isRedeemable()) ? $coupon->discountFor($base) : 0;
+        $amount = $startTrial ? 0 : max(0, $base - $discount - $prorationCredit);
+
+        return DB::transaction(function () use ($organization, $plan, $interval, $amount, $coupon, $startTrial) {
             if ($amount > 0) {
                 $charge = $this->gateway->charge($amount, $organization->currency, [
                     'organization_id' => $organization->id,
@@ -75,6 +85,9 @@ class BillingService
                     'current_period_start' => now(),
                     'current_period_end' => $periodEnd,
                     'canceled_at' => null,
+                    'cancel_at_period_end' => false,
+                    'trial_ends_at' => $startTrial ? now()->addDays($plan->trial_days) : null,
+                    'payment_attempts' => 0,
                 ],
             );
 
@@ -94,19 +107,105 @@ class BillingService
         });
     }
 
+    /**
+     * Cancel at period end — the org keeps its plan and access until
+     * current_period_end (grace period), then downgrades automatically.
+     */
     public function cancel(Organization $organization): void
     {
         Subscription::where('organization_id', $organization->id)
             ->where('status', 'active')
-            ->update(['status' => 'canceled', 'canceled_at' => now()]);
-
-        // Drop back to the free plan at period end (simplified: immediately here).
-        $free = Plan::where('key', 'free')->first();
-        if ($free) {
-            $organization->update(['plan_id' => $free->id]);
-        }
+            ->update(['cancel_at_period_end' => true, 'canceled_at' => now()]);
 
         $this->activity->log('subscription.canceled');
+    }
+
+    /** Downgrade subscriptions whose grace period has ended (scheduler). */
+    public function downgradeExpired(): int
+    {
+        $free = Plan::where('key', 'free')->first();
+        $expired = Subscription::where('cancel_at_period_end', true)
+            ->where('status', 'active')
+            ->whereNotNull('current_period_end')
+            ->where('current_period_end', '<=', now())
+            ->get();
+
+        foreach ($expired as $subscription) {
+            $subscription->update(['status' => 'canceled']);
+            if ($free) {
+                Organization::whereKey($subscription->organization_id)->update(['plan_id' => $free->id]);
+            }
+        }
+
+        return $expired->count();
+    }
+
+    /**
+     * Handle a failed renewal payment: increment attempts, enter dunning
+     * (past_due), and after the final attempt, downgrade to free.
+     */
+    public function recordPaymentFailure(Subscription $subscription, int $maxAttempts = 3): void
+    {
+        $attempts = $subscription->payment_attempts + 1;
+        $subscription->update([
+            'payment_attempts' => $attempts,
+            'status' => $attempts >= $maxAttempts ? 'canceled' : 'past_due',
+        ]);
+
+        if ($attempts >= $maxAttempts) {
+            $free = Plan::where('key', 'free')->first();
+            if ($free) {
+                Organization::whereKey($subscription->organization_id)->update(['plan_id' => $free->id]);
+            }
+        }
+
+        $this->activity->log('subscription.payment_failed', $subscription, ['attempt' => $attempts]);
+    }
+
+    /** Record a refund against an invoice. */
+    public function refund(Invoice $invoice, ?int $amount = null, ?string $reason = null): Refund
+    {
+        $amount ??= $invoice->total;
+
+        $refund = Refund::create([
+            'invoice_id' => $invoice->id,
+            'organization_id' => $invoice->organization_id,
+            'amount' => $amount,
+            'currency' => $invoice->currency,
+            'reason' => $reason,
+        ]);
+
+        $invoice->update(['status' => 'refunded']);
+        $this->activity->log('invoice.refunded', $invoice, ['amount' => $amount]);
+
+        return $refund;
+    }
+
+    /** Unused value of the current paid plan for the remaining period (proration). */
+    private function prorationCredit(?Subscription $current, Organization $organization): int
+    {
+        if (! $current || ! $current->current_period_end || ! $current->plan_id) {
+            return 0;
+        }
+
+        $plan = Plan::find($current->plan_id);
+        if (! $plan) {
+            return 0;
+        }
+
+        $periodPrice = $current->interval === 'yearly'
+            ? $plan->yearlyPriceFor($organization->currency)
+            : $plan->monthlyPriceFor($organization->currency);
+
+        if ($periodPrice <= 0) {
+            return 0;
+        }
+
+        $start = $current->current_period_start ?? $current->created_at;
+        $totalDays = max(1, $start->diffInDays($current->current_period_end));
+        $remainingDays = max(0, now()->diffInDays($current->current_period_end, false));
+
+        return (int) round($periodPrice * ($remainingDays / $totalDays));
     }
 
     private function issueInvoice(
