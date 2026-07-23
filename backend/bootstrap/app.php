@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\ResolveTenant;
 use App\Http\Middleware\SecurityHeaders;
+use App\Http\Middleware\SetLocale;
 use App\Support\ApiResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -29,9 +30,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'tenant' => ResolveTenant::class,
         ]);
 
-        // Resolve the tenant on every authenticated API request.
+        // Localize API responses from the Accept-Language header (guest + auth).
+        // The `tenant` alias resolves the organization after auth (see routes/api.php).
         $middleware->api(append: [
-            ResolveTenant::class,
+            SetLocale::class,
         ]);
 
         // Security headers on every response.

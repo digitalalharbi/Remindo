@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements HasLocalePreference, MustVerifyEmail
 {
     use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
@@ -67,6 +68,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasTwoFactorEnabled(): bool
     {
         return ! is_null($this->two_factor_confirmed_at);
+    }
+
+    /** Localize notifications/emails to the user's chosen language. */
+    public function preferredLocale(): string
+    {
+        return $this->locale ?? config('app.locale');
     }
 
     /** Role within a given organization, or null if not a member. */
