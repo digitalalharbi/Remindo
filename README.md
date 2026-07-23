@@ -98,12 +98,19 @@ Then open:
 - Super Admin → http://localhost:3000/en/admin
 - API → http://localhost:8000/api
 
-**Seeded accounts** (local/dev only):
+**Seeded accounts** (local/dev/preview — passwords are env-driven via
+`DEMO_SEED_PASSWORD` / `ADMIN_SEED_PASSWORD`; defaults shown):
 
 | Account | Email | Password | Access |
 | ------- | ----- | -------- | ------ |
-| Demo user | `demo@remindo.me` | `password123` | Dashboard |
-| Super admin | `admin@remindo.me` | `password123` | Dashboard + `/admin` |
+| Demo user | `demo@remindo.me` | `DemoPass123!` | Dashboard |
+| Super admin | `admin@remindo.me` | `AdminPass123!` | Dashboard + `/admin` |
+
+> **Public preview / live demo:** see [`docs/LIVE_PREVIEW.md`](docs/LIVE_PREVIEW.md)
+> for the reproducible deploy recipe, required env vars, preview accounts, demo
+> seed data, and the honest status of what runs live vs. sandbox. Preview mode
+> (`PREVIEW_MODE=true`) adds a "Preview Mode" badge, a "Try demo account" button,
+> and an online mailbox at **Admin → Mail log**.
 
 ## Quick start (local, no Docker)
 
@@ -165,6 +172,7 @@ to be production-ready.
 - [`docs/API.md`](docs/API.md) — API reference (~108 routes)
 - [`docs/SECURITY.md`](docs/SECURITY.md) — auth, tenancy, encryption, webhooks
 - [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — domains, services, env, enabling integrations
+- [`docs/LIVE_PREVIEW.md`](docs/LIVE_PREVIEW.md) — public preview deploy recipe, env vars, demo accounts
 - [`docs/TESTING.md`](docs/TESTING.md) — backend/unit/E2E and static checks
 - [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — tokens, colors, typography
 - [`docs/decisions/`](docs/decisions/) — architecture decision records (ADRs)

@@ -92,6 +92,27 @@ Each milestone is committed and pushed; tests for a milestone pass before the ne
 - ✅ **P8 Quality** — 67 backend tests, 7 Playwright E2E, frontend unit, lint,
   typecheck, build, pint, secret scan, audits, docker compose validate.
 
+## Phase D — Public preview
+
+- ✅ **Preview mode** — `PREVIEW_MODE` flag; "Preview Mode" badge on every
+  surface; `GET /preview` + `/health` report it.
+- ✅ **Demo experience** — env-driven demo/admin passwords (`DemoPass123!` /
+  `AdminPass123!`, no more `password123`); "Try demo account" login button;
+  rich bilingual seed data across overdue/due-soon/upcoming/renewed states.
+- ✅ **Online mailbox** — outgoing mail captured to `mail_previews`, viewable at
+  Admin → Mail log (no external inbox needed in preview).
+- ✅ **Cross-domain config** — documented `SESSION_DOMAIN`, `SANCTUM_STATEFUL_*`,
+  `CORS_ALLOWED_ORIGINS`, `SESSION_SECURE_COOKIE/SAME_SITE`, `NEXT_PUBLIC_*`.
+- ✅ **Deploy path verified in-container** — `migrate --force`, `optimize` +
+  config/route/view cache, persistent `queue:work` + `schedule:work`, production
+  build (181 routes), all 10 Playwright specs green against the built app + live
+  API + Postgres + Redis. Two preview bugs found and fixed during verification
+  (double mail-capture listener; badge intercepting clicks).
+- ⛔ **Public URLs** — blocked: this sandbox has no public inbound and no
+  PHP/Node SSR app host. Needs an external host you own. Full reproducible recipe
+  + env vars in [`LIVE_PREVIEW.md`](LIVE_PREVIEW.md); one deploy takes it live
+  with no code change.
+
 ## Integration status (honest)
 
 **Production-ready now (no external credentials required):** email + in-app
