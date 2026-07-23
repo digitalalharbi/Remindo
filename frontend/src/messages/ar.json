@@ -20,7 +20,8 @@
     "theme": "المظهر",
     "light": "فاتح",
     "dark": "داكن",
-    "system": "تلقائي"
+    "system": "تلقائي",
+    "openDashboard": "فتح لوحة التحكم"
   },
   "nav": {
     "product": "المنتج",
@@ -108,13 +109,15 @@
   },
   "app": {
     "nav": {
-      "home": "الرئيسية",
+      "overview": "نظرة عامة",
       "reminders": "التذكيرات",
       "calendar": "التقويم",
       "documents": "المستندات",
       "team": "الفريق",
-      "subscription": "الاشتراك",
-      "settings": "الإعدادات"
+      "reports": "التقارير",
+      "billing": "الاشتراك والفوترة",
+      "settings": "الإعدادات",
+      "more": "المزيد"
     },
     "dashboard": {
       "greeting": "مرحباً {name}",
@@ -207,6 +210,41 @@
       "amount": "المبلغ",
       "status": "الحالة",
       "activated": "خطتك مفعّلة الآن."
+    },
+    "documents": {
+      "dropHint": "أفلت مستنداً أو اضغط للرفع",
+      "accepted": "PDF أو صور أو Word · حتى 10 ميغابايت",
+      "aiHint": "يقرأ الذكاء الاصطناعي تاريخ الانتهاء لتراجعه.",
+      "empty": "لا توجد مستندات بعد.",
+      "extracted": "تمت القراءة",
+      "uploaded": "تم رفع المستند.",
+      "createReminder": "إنشاء تذكير"
+    },
+    "team": {
+      "seats": "{used} من {total} مقاعد",
+      "empty": "لا يوجد أعضاء بعد.",
+      "role_owner": "المالك",
+      "role_admin": "مشرف",
+      "role_member": "عضو"
+    },
+    "reports": {
+      "active": "نشط",
+      "overdue": "متأخر",
+      "thisWeek": "هذا الأسبوع",
+      "thisMonth": "هذا الشهر",
+      "byCategory": "حسب التصنيف",
+      "uncategorized": "بدون تصنيف",
+      "empty": "لا توجد بيانات بعد."
+    },
+    "settings": {
+      "profile": "الملف الشخصي",
+      "fullName": "الاسم الكامل",
+      "phone": "الجوال",
+      "language": "اللغة",
+      "country": "الدولة",
+      "timezone": "المنطقة الزمنية",
+      "save": "حفظ التغييرات",
+      "saved": "تم حفظ الإعدادات."
     }
   },
   "footer": {

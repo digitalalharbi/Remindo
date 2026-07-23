@@ -1,23 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Plus, Search, BellRing } from "lucide-react";
 import { useReminders } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ReminderCard } from "@/components/app/reminder-card";
-import { CreateReminderDialog } from "@/components/app/create-reminder-dialog";
+import { ReminderCard } from "@/components/dashboard/reminder-card";
+import { useUiStore } from "@/stores/ui";
 import { cn } from "@/lib/utils";
 
 const FILTERS = ["all", "active", "overdue", "upcoming", "completed"] as const;
 
 export default function RemindersPage() {
   const t = useTranslations("app.reminders");
-  const [search, setSearch] = useState("");
+  const queryParams = useSearchParams();
+  const [search, setSearch] = useState(queryParams.get("q") ?? "");
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("all");
-  const [createOpen, setCreateOpen] = useState(false);
+  const openCreate = useUiStore((s) => s.openCreateReminder);
+
+  // Sync the top-bar search query (URL) into the page's search box.
+  useEffect(() => {
+    const q = queryParams.get("q");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (q !== null) setSearch(q);
+  }, [queryParams]);
 
   const params: Record<string, string> = {};
   if (search) params.search = search;
@@ -33,7 +42,7 @@ export default function RemindersPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
-        <Button onClick={() => setCreateOpen(true)}>
+        <Button onClick={openCreate}>
           <Plus className="size-4" />
           {t("add")}
         </Button>
@@ -89,7 +98,7 @@ export default function RemindersPage() {
           <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
             {t("emptyBody")}
           </p>
-          <Button className="mt-5" onClick={() => setCreateOpen(true)}>
+          <Button className="mt-5" onClick={openCreate}>
             <Plus className="size-4" />
             {t("add")}
           </Button>
@@ -101,8 +110,6 @@ export default function RemindersPage() {
           ))}
         </div>
       )}
-
-      <CreateReminderDialog open={createOpen} onClose={() => setCreateOpen(false)} />
     </div>
   );
 }

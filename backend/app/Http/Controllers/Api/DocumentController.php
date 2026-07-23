@@ -28,6 +28,21 @@ class DocumentController extends Controller
         private readonly AiUsageTracker $usage,
     ) {}
 
+    /** List the organization's documents (most recent first). */
+    public function index(): JsonResponse
+    {
+        $documents = Document::query()->latest()->limit(100)->get()->map(fn (Document $d) => [
+            'id' => $d->id,
+            'original_name' => $d->original_name,
+            'mime' => $d->mime,
+            'size' => $d->size,
+            'extraction_status' => $d->extraction_status,
+            'created_at' => $d->created_at?->toIso8601String(),
+        ]);
+
+        return ApiResponse::success($documents);
+    }
+
     /** Upload a document (drag-and-drop from the client). */
     public function store(Request $request): JsonResponse
     {

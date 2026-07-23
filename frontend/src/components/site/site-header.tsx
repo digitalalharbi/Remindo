@@ -8,12 +8,15 @@ import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { LocaleSwitcher } from "./locale-switcher";
 import { buttonVariants } from "@/components/ui/button";
+import { useMe } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   const [open, setOpen] = useState(false);
+  // Cookie-based session check; when signed in we show "Open dashboard".
+  const { data: user } = useMe();
 
   const links = [
     { href: "/how-it-works", label: t("howItWorks") },
@@ -44,18 +47,26 @@ export function SiteHeader() {
           <LocaleSwitcher />
           <ThemeToggle />
           <div className="hidden items-center gap-2 sm:flex">
-            <Link
-              href="/login"
-              className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
-            >
-              {tc("signIn")}
-            </Link>
-            <Link
-              href="/register"
-              className={cn(buttonVariants({ size: "sm" }))}
-            >
-              {tc("getStarted")}
-            </Link>
+            {user ? (
+              <Link href="/dashboard" className={cn(buttonVariants({ size: "sm" }))}>
+                {tc("openDashboard")}
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  {tc("signIn")}
+                </Link>
+                <Link
+                  href="/register"
+                  className={cn(buttonVariants({ size: "sm" }))}
+                >
+                  {tc("getStarted")}
+                </Link>
+              </>
+            )}
           </div>
           <button
             className="grid size-9 place-items-center rounded-lg border border-border md:hidden"

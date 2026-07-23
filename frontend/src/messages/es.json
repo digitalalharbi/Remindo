@@ -20,7 +20,8 @@
     "theme": "Tema",
     "light": "Claro",
     "dark": "Oscuro",
-    "system": "Sistema"
+    "system": "Sistema",
+    "openDashboard": "Abrir panel"
   },
   "nav": {
     "product": "Producto",
@@ -108,13 +109,15 @@
   },
   "app": {
     "nav": {
-      "home": "Inicio",
+      "overview": "Resumen",
       "reminders": "Recordatorios",
       "calendar": "Calendario",
       "documents": "Documentos",
       "team": "Equipo",
-      "subscription": "Suscripción",
-      "settings": "Ajustes"
+      "reports": "Informes",
+      "billing": "Facturación",
+      "settings": "Ajustes",
+      "more": "Más"
     },
     "dashboard": {
       "greeting": "Hola {name}",
@@ -207,6 +210,41 @@
       "amount": "Importe",
       "status": "Estado",
       "activated": "Tu plan está activo."
+    },
+    "documents": {
+      "dropHint": "Suelta un documento o haz clic para subir",
+      "accepted": "PDF, imágenes o Word · hasta 10 MB",
+      "aiHint": "La IA lee la fecha de vencimiento para que la revises.",
+      "empty": "Aún no hay documentos.",
+      "extracted": "Leído",
+      "uploaded": "Documento subido.",
+      "createReminder": "Crear recordatorio"
+    },
+    "team": {
+      "seats": "{used} de {total} plazas",
+      "empty": "Aún no hay miembros del equipo.",
+      "role_owner": "Propietario",
+      "role_admin": "Administrador",
+      "role_member": "Miembro"
+    },
+    "reports": {
+      "active": "Activos",
+      "overdue": "Vencidos",
+      "thisWeek": "Esta semana",
+      "thisMonth": "Este mes",
+      "byCategory": "Por categoría",
+      "uncategorized": "Sin categoría",
+      "empty": "Aún no hay datos."
+    },
+    "settings": {
+      "profile": "Perfil",
+      "fullName": "Nombre completo",
+      "phone": "Teléfono",
+      "language": "Idioma",
+      "country": "País",
+      "timezone": "Zona horaria",
+      "save": "Guardar cambios",
+      "saved": "Ajustes guardados."
     }
   },
   "footer": {

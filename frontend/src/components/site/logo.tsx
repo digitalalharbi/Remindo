@@ -2,10 +2,16 @@ import { BellRing } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({
+  className,
+  href = "/",
+}: {
+  className?: string;
+  href?: string;
+}) {
   return (
     <Link
-      href="/"
+      href={href}
       className={cn("inline-flex items-center gap-2 font-semibold", className)}
       aria-label="Remindo"
     >

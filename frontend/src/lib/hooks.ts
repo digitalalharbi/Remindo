@@ -259,6 +259,87 @@ export function useSubscribe() {
   });
 }
 
+/* ── Profile / team / notifications / documents ───────── */
+
+export function useUpdateProfile() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: Partial<Pick<User, "name" | "phone" | "locale" | "country" | "timezone">>) => {
+      await ensureCsrf();
+      const { data } = await api.patch<ApiEnvelope<User>>("/profile", input);
+      return data.data;
+    },
+    onSuccess: (user) => {
+      qc.setQueryData(["me"], user);
+    },
+  });
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+export function useTeam() {
+  return useQuery({
+    queryKey: ["team"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<TeamMember[]>>("/team");
+      return data;
+    },
+  });
+}
+
+export interface AppNotification {
+  id: string;
+  data: { title?: string; reminder_id?: string; expiry_date?: string; days_until_expiry?: number };
+  read: boolean;
+  created_at: string;
+}
+
+export function useNotifications() {
+  return useQuery({
+    queryKey: ["notifications"],
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<AppNotification[]>>("/notifications");
+      return data;
+    },
+  });
+}
+
+export function useMarkAllRead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      await ensureCsrf();
+      await api.post("/notifications/read-all");
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["notifications"] }),
+  });
+}
+
+export interface DocumentItem {
+  id: string;
+  original_name: string;
+  mime: string;
+  size: number;
+  extraction_status: string;
+  created_at: string;
+}
+
+export function useDocuments() {
+  return useQuery({
+    queryKey: ["documents"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<DocumentItem[]>>("/documents");
+      return data.data;
+    },
+  });
+}
+
 /* ── Categories ───────────────────────────────────────── */
 
 export function useCategories() {

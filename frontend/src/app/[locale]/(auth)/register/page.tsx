@@ -40,7 +40,7 @@ export default function RegisterPage() {
       const tz =
         Intl.DateTimeFormat().resolvedOptions().timeZone ?? "UTC";
       await registerMut.mutateAsync({ ...values, locale, timezone: tz });
-      router.push("/app");
+      router.push("/dashboard");
     } catch {
       /* surfaced below */
     }

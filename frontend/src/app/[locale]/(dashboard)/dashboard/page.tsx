@@ -1,20 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Plus, Inbox } from "lucide-react";
 import { useDashboard, useMe } from "@/lib/hooks";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ReminderCard } from "@/components/app/reminder-card";
-import { CreateReminderDialog } from "@/components/app/create-reminder-dialog";
+import { ReminderCard } from "@/components/dashboard/reminder-card";
+import { useUiStore } from "@/stores/ui";
 import { cn } from "@/lib/utils";
 
 export default function DashboardPage() {
   const t = useTranslations("app.dashboard");
   const { data: user } = useMe();
   const { data, isLoading } = useDashboard();
-  const [createOpen, setCreateOpen] = useState(false);
+  const openCreate = useUiStore((s) => s.openCreateReminder);
 
   const stats = [
     { key: "overdue", value: data?.counts.overdue ?? 0, tone: "text-danger" },
@@ -34,7 +33,7 @@ export default function DashboardPage() {
           </h1>
           <p className="mt-1 text-muted-foreground">{t("subtitle")}</p>
         </div>
-        <Button onClick={() => setCreateOpen(true)}>
+        <Button onClick={openCreate}>
           <Plus className="size-4" />
           {t("addReminder")}
         </Button>
@@ -76,7 +75,7 @@ export default function DashboardPage() {
             <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
               {t("emptyBody")}
             </p>
-            <Button className="mt-5" onClick={() => setCreateOpen(true)}>
+            <Button className="mt-5" onClick={openCreate}>
               <Plus className="size-4" />
               {t("addReminder")}
             </Button>
@@ -89,8 +88,6 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
-
-      <CreateReminderDialog open={createOpen} onClose={() => setCreateOpen(false)} />
     </div>
   );
 }

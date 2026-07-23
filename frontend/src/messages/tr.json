@@ -20,7 +20,8 @@
     "theme": "Tema",
     "light": "Açık",
     "dark": "Koyu",
-    "system": "Sistem"
+    "system": "Sistem",
+    "openDashboard": "Panele git"
   },
   "nav": {
     "product": "Ürün",
@@ -108,13 +109,15 @@
   },
   "app": {
     "nav": {
-      "home": "Ana sayfa",
+      "overview": "Genel bakış",
       "reminders": "Hatırlatıcılar",
       "calendar": "Takvim",
       "documents": "Belgeler",
       "team": "Ekip",
-      "subscription": "Abonelik",
-      "settings": "Ayarlar"
+      "reports": "Raporlar",
+      "billing": "Faturalandırma",
+      "settings": "Ayarlar",
+      "more": "Daha fazla"
     },
     "dashboard": {
       "greeting": "Merhaba {name}",
@@ -207,6 +210,41 @@
       "amount": "Tutar",
       "status": "Durum",
       "activated": "Planınız aktif."
+    },
+    "documents": {
+      "dropHint": "Bir belge bırak veya yüklemek için tıkla",
+      "accepted": "PDF, görsel veya Word · 10 MB'a kadar",
+      "aiHint": "Yapay zeka son kullanma tarihini senin için okur.",
+      "empty": "Henüz belge yok.",
+      "extracted": "Okundu",
+      "uploaded": "Belge yüklendi.",
+      "createReminder": "Hatırlatıcı oluştur"
+    },
+    "team": {
+      "seats": "{used} / {total} koltuk",
+      "empty": "Henüz ekip üyesi yok.",
+      "role_owner": "Sahip",
+      "role_admin": "Yönetici",
+      "role_member": "Üye"
+    },
+    "reports": {
+      "active": "Aktif",
+      "overdue": "Gecikmiş",
+      "thisWeek": "Bu hafta",
+      "thisMonth": "Bu ay",
+      "byCategory": "Kategoriye göre",
+      "uncategorized": "Kategorisiz",
+      "empty": "Henüz veri yok."
+    },
+    "settings": {
+      "profile": "Profil",
+      "fullName": "Ad soyad",
+      "phone": "Telefon",
+      "language": "Dil",
+      "country": "Ülke",
+      "timezone": "Saat dilimi",
+      "save": "Değişiklikleri kaydet",
+      "saved": "Ayarlar kaydedildi."
     }
   },
   "footer": {

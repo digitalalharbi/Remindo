@@ -28,6 +28,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   locale: string;
   country?: string;
   timezone: string;

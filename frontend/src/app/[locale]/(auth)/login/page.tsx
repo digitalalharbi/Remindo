@@ -30,7 +30,7 @@ export default function LoginPage() {
   const onSubmit = async (values: FormValues) => {
     try {
       await login.mutateAsync(values);
-      router.push("/app");
+      router.push("/dashboard");
     } catch {
       /* error surfaced below */
     }

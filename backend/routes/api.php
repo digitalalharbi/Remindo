@@ -6,10 +6,13 @@ use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PlanController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ReminderController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TagController;
+use App\Http\Controllers\Api\TeamController;
 use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +40,13 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
+    // Profile, team, notifications
+    Route::patch('/profile', [ProfileController::class, 'update']);
+    Route::get('/team', [TeamController::class, 'index']);
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead']);
+
     // Reminders
     Route::apiResource('reminders', ReminderController::class);
     Route::post('/reminders/{reminder}/complete', [ReminderController::class, 'complete']);
@@ -59,6 +69,7 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
     Route::delete('/subscription', [SubscriptionController::class, 'cancel']);
 
     // Documents + AI extraction (review-before-save; never auto-applied)
+    Route::get('/documents', [DocumentController::class, 'index']);
     Route::post('/documents', [DocumentController::class, 'store']);
     Route::post('/documents/{document}/extract', [DocumentController::class, 'extract']);
     Route::get('/documents/{document}/download', [DocumentController::class, 'download']);

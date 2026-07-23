@@ -20,7 +20,8 @@
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "system": "System"
+    "system": "System",
+    "openDashboard": "Open dashboard"
   },
   "nav": {
     "product": "Product",
@@ -108,13 +109,15 @@
   },
   "app": {
     "nav": {
-      "home": "Home",
+      "overview": "Overview",
       "reminders": "Reminders",
       "calendar": "Calendar",
       "documents": "Documents",
       "team": "Team",
-      "subscription": "Subscription",
-      "settings": "Settings"
+      "reports": "Reports",
+      "billing": "Billing",
+      "settings": "Settings",
+      "more": "More"
     },
     "dashboard": {
       "greeting": "Hi {name}",
@@ -207,6 +210,41 @@
       "amount": "Amount",
       "status": "Status",
       "activated": "Your plan is active."
+    },
+    "documents": {
+      "dropHint": "Drop a document or click to upload",
+      "accepted": "PDF, images, or Word · up to 10 MB",
+      "aiHint": "AI reads the expiry date for you to review.",
+      "empty": "No documents yet.",
+      "extracted": "Read",
+      "uploaded": "Document uploaded.",
+      "createReminder": "Create reminder"
+    },
+    "team": {
+      "seats": "{used} of {total} seats",
+      "empty": "No team members yet.",
+      "role_owner": "Owner",
+      "role_admin": "Admin",
+      "role_member": "Member"
+    },
+    "reports": {
+      "active": "Active",
+      "overdue": "Overdue",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "byCategory": "By category",
+      "uncategorized": "Uncategorized",
+      "empty": "No data yet."
+    },
+    "settings": {
+      "profile": "Profile",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "language": "Language",
+      "country": "Country",
+      "timezone": "Time zone",
+      "save": "Save changes",
+      "saved": "Settings saved."
     }
   },
   "footer": {
