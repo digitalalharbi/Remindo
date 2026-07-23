@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PlanSeeder::class,
             CategorySeeder::class,
+            AdminSeeder::class,
         ]);
 
         // Demo data only outside production.

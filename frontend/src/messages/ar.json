@@ -268,5 +268,51 @@
     "warranties": "الضمانات",
     "certificates": "الشهادات",
     "maintenance": "الصيانة"
+  },
+  "admin": {
+    "nav": {
+      "title": "الإدارة",
+      "overview": "نظرة عامة",
+      "users": "المستخدمون",
+      "organizations": "المؤسسات",
+      "plans": "الخطط",
+      "invoices": "الفواتير",
+      "auditLogs": "سجل النشاط",
+      "backToApp": "العودة للتطبيق"
+    },
+    "stats": {
+      "users": "المستخدمون",
+      "organizations": "المؤسسات",
+      "subscriptions": "اشتراكات نشطة",
+      "reminders": "التذكيرات",
+      "revenue": "الإيرادات",
+      "ai": "عمليات الذكاء"
+    },
+    "empty": "لا توجد بيانات بعد.",
+    "fields": {
+      "name": "الاسم",
+      "email": "البريد",
+      "country": "الدولة",
+      "role": "الدور",
+      "verified": "مُوثّق",
+      "created": "تاريخ الإنشاء",
+      "type": "النوع",
+      "plan": "الخطة",
+      "members": "الأعضاء",
+      "currency": "العملة",
+      "monthly": "شهري",
+      "yearly": "سنوي",
+      "reminders": "التذكيرات",
+      "users": "المستخدمون",
+      "status": "الحالة",
+      "number": "الرقم",
+      "organization": "المؤسسة",
+      "amount": "المبلغ",
+      "provider": "المزود",
+      "date": "التاريخ",
+      "action": "الإجراء",
+      "user": "المستخدم",
+      "subject": "العنصر"
+    }
   }
 }

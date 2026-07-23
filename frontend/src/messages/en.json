@@ -268,5 +268,51 @@
     "warranties": "Warranties",
     "certificates": "Certificates",
     "maintenance": "Maintenance"
+  },
+  "admin": {
+    "nav": {
+      "title": "Admin",
+      "overview": "Overview",
+      "users": "Users",
+      "organizations": "Organizations",
+      "plans": "Plans",
+      "invoices": "Invoices",
+      "auditLogs": "Audit logs",
+      "backToApp": "Back to app"
+    },
+    "stats": {
+      "users": "Users",
+      "organizations": "Organizations",
+      "subscriptions": "Active subscriptions",
+      "reminders": "Reminders",
+      "revenue": "Revenue",
+      "ai": "AI operations"
+    },
+    "empty": "No data yet.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "country": "Country",
+      "role": "Role",
+      "verified": "Verified",
+      "created": "Created",
+      "type": "Type",
+      "plan": "Plan",
+      "members": "Members",
+      "currency": "Currency",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "reminders": "Reminders",
+      "users": "Users",
+      "status": "Status",
+      "number": "Number",
+      "organization": "Organization",
+      "amount": "Amount",
+      "provider": "Provider",
+      "date": "Date",
+      "action": "Action",
+      "user": "User",
+      "subject": "Subject"
+    }
   }
 }

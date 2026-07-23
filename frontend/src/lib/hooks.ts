@@ -340,6 +340,28 @@ export function useDocuments() {
   });
 }
 
+/* ── Super Admin ──────────────────────────────────────── */
+
+export function useAdminStats() {
+  return useQuery({
+    queryKey: ["admin", "stats"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<Record<string, number | string>>>("/admin/stats");
+      return data.data;
+    },
+  });
+}
+
+export function useAdminList<T = Record<string, unknown>>(resource: string) {
+  return useQuery({
+    queryKey: ["admin", resource],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<T[]>>(`/admin/${resource}`);
+      return data;
+    },
+  });
+}
+
 /* ── Categories ───────────────────────────────────────── */
 
 export function useCategories() {

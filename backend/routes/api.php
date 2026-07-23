@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
@@ -74,6 +75,16 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
     Route::post('/documents/{document}/extract', [DocumentController::class, 'extract']);
     Route::get('/documents/{document}/download', [DocumentController::class, 'download']);
     Route::post('/ai/parse', [DocumentController::class, 'parse']);
+});
+
+// ── Super Admin (Remindo staff only) ──────────────────────
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/stats', [AdminController::class, 'stats']);
+    Route::get('/users', [AdminController::class, 'users']);
+    Route::get('/organizations', [AdminController::class, 'organizations']);
+    Route::get('/plans', [AdminController::class, 'plans']);
+    Route::get('/invoices', [AdminController::class, 'invoices']);
+    Route::get('/audit-logs', [AdminController::class, 'auditLogs']);
 });
 
 // Signed file streaming (authorized by the signed URL, not the session).

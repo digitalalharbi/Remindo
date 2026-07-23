@@ -268,5 +268,51 @@
     "warranties": "Garantiler",
     "certificates": "Sertifikalar",
     "maintenance": "Bakım"
+  },
+  "admin": {
+    "nav": {
+      "title": "Yönetim",
+      "overview": "Genel bakış",
+      "users": "Kullanıcılar",
+      "organizations": "Kuruluşlar",
+      "plans": "Planlar",
+      "invoices": "Faturalar",
+      "auditLogs": "Denetim kayıtları",
+      "backToApp": "Uygulamaya dön"
+    },
+    "stats": {
+      "users": "Kullanıcılar",
+      "organizations": "Kuruluşlar",
+      "subscriptions": "Aktif abonelikler",
+      "reminders": "Hatırlatıcılar",
+      "revenue": "Gelir",
+      "ai": "YZ işlemleri"
+    },
+    "empty": "Henüz veri yok.",
+    "fields": {
+      "name": "Ad",
+      "email": "E-posta",
+      "country": "Ülke",
+      "role": "Rol",
+      "verified": "Doğrulandı",
+      "created": "Oluşturuldu",
+      "type": "Tür",
+      "plan": "Plan",
+      "members": "Üyeler",
+      "currency": "Para birimi",
+      "monthly": "Aylık",
+      "yearly": "Yıllık",
+      "reminders": "Hatırlatıcılar",
+      "users": "Kullanıcılar",
+      "status": "Durum",
+      "number": "Numara",
+      "organization": "Kuruluş",
+      "amount": "Tutar",
+      "provider": "Sağlayıcı",
+      "date": "Tarih",
+      "action": "Eylem",
+      "user": "Kullanıcı",
+      "subject": "Nesne"
+    }
   }
 }

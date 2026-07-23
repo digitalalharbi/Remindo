@@ -58,10 +58,18 @@ Legend: ✅ done · 🟡 partial / scaffolded · ⬜ planned
 - ⬜ Google / Outlook calendar sync
 - ⬜ OAuth login (Google, Microsoft)
 
-## Milestone 7 — Admin & hardening
-- ⬜ Super-admin (users, plans, content, translations, flags)
-- ⬜ 2FA, audit logs, security headers, backups
-- ⬜ E2E, accessibility, RTL/LTR, responsive tests
+## Milestone 7 — Interface separation & Admin 🟡
+- ✅ Three separate experiences: marketing / dashboard / admin, each with its own
+  layout (MarketingLayout, AuthLayout, DashboardLayout, AdminLayout). Route
+  groups `(marketing)`, `(auth)`, `(dashboard)` + `admin/`.
+- ✅ Real dashboard: sidebar + top bar (search, add, notifications, lang, theme,
+  account), pages: overview, reminders, calendar, documents, team, reports,
+  billing, settings.
+- ✅ Super Admin (guarded `/admin`, super-admin only): overview stats, users,
+  organizations, plans, invoices, audit logs. Admin API + 3 tests (28 total).
+- ✅ Security headers; audit logs surfaced in admin.
+- ⬜ Admin write actions (edit plans/pricing/flags, suspend accounts), content &
+  translation management, 2FA, backups, broader E2E/a11y coverage.
 
 Each milestone is committed and pushed; tests for a milestone pass before the next begins.
 

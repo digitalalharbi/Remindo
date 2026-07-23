@@ -268,5 +268,51 @@
     "warranties": "Garantías",
     "certificates": "Certificados",
     "maintenance": "Mantenimiento"
+  },
+  "admin": {
+    "nav": {
+      "title": "Admin",
+      "overview": "Resumen",
+      "users": "Usuarios",
+      "organizations": "Organizaciones",
+      "plans": "Planes",
+      "invoices": "Facturas",
+      "auditLogs": "Registros",
+      "backToApp": "Volver a la app"
+    },
+    "stats": {
+      "users": "Usuarios",
+      "organizations": "Organizaciones",
+      "subscriptions": "Suscripciones activas",
+      "reminders": "Recordatorios",
+      "revenue": "Ingresos",
+      "ai": "Operaciones de IA"
+    },
+    "empty": "Aún no hay datos.",
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo",
+      "country": "País",
+      "role": "Rol",
+      "verified": "Verificado",
+      "created": "Creado",
+      "type": "Tipo",
+      "plan": "Plan",
+      "members": "Miembros",
+      "currency": "Moneda",
+      "monthly": "Mensual",
+      "yearly": "Anual",
+      "reminders": "Recordatorios",
+      "users": "Usuarios",
+      "status": "Estado",
+      "number": "Número",
+      "organization": "Organización",
+      "amount": "Importe",
+      "provider": "Proveedor",
+      "date": "Fecha",
+      "action": "Acción",
+      "user": "Usuario",
+      "subject": "Objeto"
+    }
   }
 }

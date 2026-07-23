@@ -42,13 +42,22 @@ Remindo is **not** a general calendar and **not** a complex company-management s
 └── README.md
 ```
 
-### Domains
+### Three separate experiences
 
-| Domain            | Purpose            |
-| ----------------- | ------------------ |
-| `remindo.me`      | Public marketing site |
-| `app.remindo.me`  | The web app         |
-| `api.remindo.me`  | The JSON API        |
+Remindo is deliberately split into three distinct products that share only the
+design system (colors, fonts, primitives) — never a layout:
+
+| Surface | Domain (prod) | Local path | Layout |
+| ------- | ------------- | ---------- | ------ |
+| Marketing site | `remindo.me` | `/{locale}` (marketing group) | `MarketingLayout` |
+| Auth | `app.remindo.me/login` | `/{locale}/login`, `/register` | `AuthLayout` |
+| User dashboard | `app.remindo.me` | `/{locale}/dashboard`, `/reminders`, … | `DashboardLayout` |
+| Super Admin | `admin.remindo.me` / `/admin` | `/{locale}/admin` | `AdminLayout` |
+| API | `api.remindo.me` | `:8000/api` | — |
+
+The marketing site never renders the dashboard; the dashboard never shows
+marketing content. Access to `/dashboard` requires a session; `/admin` requires
+a super-admin account.
 
 ### Languages
 
@@ -84,8 +93,17 @@ docker compose exec backend php artisan migrate --seed
 
 Then open:
 
-- Marketing / app → http://localhost:3000
+- Marketing site → http://localhost:3000/en (or `/ar`, `/es`, `/tr`)
+- User dashboard → http://localhost:3000/en/dashboard
+- Super Admin → http://localhost:3000/en/admin
 - API → http://localhost:8000/api
+
+**Seeded accounts** (local/dev only):
+
+| Account | Email | Password | Access |
+| ------- | ----- | -------- | ------ |
+| Demo user | `demo@remindo.me` | `password123` | Dashboard |
+| Super admin | `admin@remindo.me` | `password123` | Dashboard + `/admin` |
 
 ## Quick start (local, no Docker)
 
