@@ -47,3 +47,18 @@ test("ships an interactive, accessible reminder flow", async () => {
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 });
+
+test("authenticated app uses the real API without persistent token storage", async () => {
+  const [appPage, apiClient] = await Promise.all([
+    readFile(new URL("../app/app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../lib/api.ts", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(appPage, /api<AuthPayload>/);
+  assert.match(appPage, /await loadReminders/);
+  assert.match(appPage, /schedules:/);
+  assert.match(apiClient, /NEXT_PUBLIC_API_URL/);
+  assert.match(apiClient, /credentials: "include"/);
+  assert.doesNotMatch(appPage + apiClient, /localStorage|sessionStorage/);
+  assert.doesNotMatch(appPage, /const reminders = \[/);
+});
