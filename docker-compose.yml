@@ -1,0 +1,97 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: remindo_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-remindo}
+      POSTGRES_USER: ${POSTGRES_USER:-remindo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-remindo}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - ./infrastructure/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-remindo}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: remindo_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - ./infrastructure/data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: remindo_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+
+  # Queue worker (Laravel Horizon) — shares the backend image.
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: remindo_worker
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - ./backend/.env
+    command: php artisan horizon
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+
+  # Scheduler — runs due-reminder dispatch every minute.
+  scheduler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: remindo_scheduler
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - ./backend/.env
+    command: php artisan schedule:work
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: remindo_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
