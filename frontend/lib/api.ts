@@ -1,17 +1,33 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+const API_ORIGIN = API_URL.replace(/\/api\/?$/, "");
 
-type ApiOptions = RequestInit & { token?: string };
+function cookie(name: string): string {
+  if (typeof document === "undefined") return "";
+  const value = document.cookie.split("; ").find((item) => item.startsWith(`${name}=`));
+  return value ? decodeURIComponent(value.split("=").slice(1).join("=")) : "";
+}
 
-export async function api<T>(path: string, options: ApiOptions = {}): Promise<T> {
-  const { token, ...init } = options;
+export async function csrf(): Promise<void> {
+  await fetch(`${API_ORIGIN}/sanctum/csrf-cookie`, {
+    credentials: "include",
+    headers: { Accept: "application/json" },
+  });
+}
+
+export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const method = (options.method ?? "GET").toUpperCase();
+  if (!["GET", "HEAD", "OPTIONS"].includes(method) && !cookie("XSRF-TOKEN")) {
+    await csrf();
+  }
+
   const response = await fetch(`${API_URL}/v1${path}`, {
-    ...init,
+    ...options,
     credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...init.headers,
+      ...(cookie("XSRF-TOKEN") ? { "X-XSRF-TOKEN": cookie("XSRF-TOKEN") } : {}),
+      ...options.headers,
     },
   });
 

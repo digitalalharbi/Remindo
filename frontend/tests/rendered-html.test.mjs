@@ -55,7 +55,8 @@ test("authenticated app uses the real API without persistent token storage", asy
   ]);
 
   assert.match(appPage, /api<AuthPayload>/);
-  assert.match(appPage, /await loadReminders/);
+  assert.match(appPage, /await loadData/);
+  assert.match(appPage, /\/dashboard/);
   assert.match(appPage, /schedules:/);
   assert.match(apiClient, /NEXT_PUBLIC_API_URL/);
   assert.match(apiClient, /credentials: "include"/);

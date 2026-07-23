@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmailVerificationController;
 use App\Http\Controllers\Api\PasswordController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ReminderController;
 use App\Models\ReminderNotification;
 use Illuminate\Http\Request;
@@ -24,6 +26,8 @@ Route::prefix('v1')->group(function (): void {
         Route::get('/auth/sessions', [AuthController::class, 'sessions']);
         Route::delete('/auth/sessions/{token}', [AuthController::class, 'revokeSession']);
         Route::put('/auth/password', [PasswordController::class, 'change']);
+        Route::put('/profile', [ProfileController::class, 'update']);
+        Route::get('/dashboard', DashboardController::class);
         Route::post('/auth/email/verification-notification', [EmailVerificationController::class, 'send'])->middleware('throttle:6,1');
         Route::get('/auth/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('signed')->name('verification.verify');
 

@@ -21,7 +21,7 @@ class StoreReminderRequest extends FormRequest
             'notes' => ['nullable', 'string', 'max:5000'],
             'priority' => ['nullable', Rule::in(['low', 'normal', 'high', 'critical'])],
             'recurrence' => ['nullable', Rule::in(['none', 'daily', 'weekly', 'monthly', 'yearly'])],
-            'schedules' => ['required', 'array', 'min:1', 'max:10'],
+            'schedules' => [Rule::requiredIf($this->isMethod('POST')), 'array', 'min:1', 'max:10'],
             'schedules.*.scheduled_at' => ['required', 'date'],
             'schedules.*.channel' => ['required', Rule::in(['email', 'in_app', 'sms', 'whatsapp'])],
         ];
