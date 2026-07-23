@@ -259,6 +259,22 @@
       "syncUnavailable": "Canlı takvim senkronizasyonu kurulum gerektirir. Bugün .ics akışını dışa aktarabilir veya abone olabilirsiniz.",
       "connectGoogle": "Google Calendar bağla",
       "connectOutlook": "Outlook bağla"
+    },
+    "notifications": {
+      "title": "Bildirimler",
+      "channels": "Kanallar",
+      "quietHours": "Sessiz saatler",
+      "quietHoursHint": "Bu saatlerde SMS, WhatsApp ve push bildirimlerini duraklat.",
+      "from": "Başlangıç",
+      "to": "Bitiş",
+      "credits": "Mesaj kredileri",
+      "buy": "Satın al",
+      "balance": "{count} kaldı",
+      "email": "E-posta",
+      "in_app": "Uygulama içi",
+      "web_push": "Web push",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp"
     }
   },
   "footer": {

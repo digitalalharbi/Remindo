@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Reminder;
+use App\Services\Notifications\WebhookDispatcher;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\DB;
  */
 class ReminderService
 {
-    public function __construct(private readonly ActivityLogger $activity) {}
+    public function __construct(
+        private readonly ActivityLogger $activity,
+        private readonly WebhookDispatcher $webhooks,
+    ) {}
 
     /**
      * Create a reminder plus its notification schedule.
@@ -52,6 +56,11 @@ class ReminderService
             );
 
             $this->activity->log('reminder.created', $reminder);
+            $this->webhooks->dispatch('reminder.created', [
+                'id' => $reminder->id,
+                'title' => $reminder->title,
+                'expiry_date' => $reminder->expiry_date->toDateString(),
+            ]);
 
             return $reminder->fresh(['category', 'tags', 'notifications']);
         });

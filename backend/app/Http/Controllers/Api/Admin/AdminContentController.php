@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CreditPack;
 use App\Models\Faq;
 use App\Models\FeatureFlag;
 use App\Models\Language;
@@ -11,6 +12,7 @@ use App\Services\ActivityLogger;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 /**
@@ -103,6 +105,42 @@ class AdminContentController extends Controller
             'category' => ['sometimes', 'string', 'max:60'],
             'published' => ['boolean'],
         ]);
+    }
+
+    /* ── Credit packs + provider pricing ── */
+
+    public function creditPacks(): JsonResponse
+    {
+        return ApiResponse::success(CreditPack::orderBy('channel')->get());
+    }
+
+    public function saveCreditPack(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'id' => ['nullable', 'uuid'],
+            'channel' => ['required', Rule::in(['sms', 'whatsapp', 'ai'])],
+            'name' => ['required', 'string', 'max:80'],
+            'credits' => ['required', 'integer', 'min:1'],
+            'price' => ['required', 'integer', 'min:0'],
+            'currency' => ['required', 'string', 'size:3'],
+            'is_active' => ['boolean'],
+        ]);
+
+        $pack = CreditPack::updateOrCreate(
+            ['id' => $data['id'] ?? (string) Str::uuid7()],
+            collect($data)->except('id')->all(),
+        );
+        $this->audit->logAdmin('credit_pack.saved', $pack, ['channel' => $pack->channel]);
+
+        return ApiResponse::success($pack);
+    }
+
+    public function deleteCreditPack(CreditPack $creditPack): JsonResponse
+    {
+        $this->audit->logAdmin('credit_pack.deleted', $creditPack);
+        $creditPack->delete();
+
+        return ApiResponse::message('ok');
     }
 
     /* ── Generic settings (SEO / content / templates) ── */

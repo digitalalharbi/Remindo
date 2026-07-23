@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Models\NotificationPreference;
 use App\Models\ReminderNotification;
 use App\Notifications\ReminderDueNotification;
+use App\Services\Notifications\CreditService;
 use App\Support\Tenancy;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -49,10 +51,40 @@ class SendReminderNotification implements ShouldQueue
             return;
         }
 
-        Tenancy::forOrganization($reminder->organization_id, function () use ($recipient, $reminder, $notification) {
-            // For MVP, email + in_app go through Laravel's notification system.
-            // Other channels are delegated to their adapters (mock by default).
-            $recipient->notify(new ReminderDueNotification($reminder, $notification->channel));
+        $channel = $notification->channel;
+        $pref = NotificationPreference::firstOrCreate(['user_id' => $recipient->id]);
+
+        // Respect channel preferences.
+        if (! $pref->allows($channel)) {
+            $notification->update(['status' => 'cancelled', 'error' => 'channel_disabled']);
+
+            return;
+        }
+
+        // Quiet hours suppress interruptive channels (email + in-app still deliver).
+        $localHour = (int) now()->timezone($recipient->timezone ?? 'UTC')->format('G');
+        $interruptive = in_array($channel, ['web_push', 'sms', 'whatsapp'], true);
+        if ($interruptive && $pref->isQuietAt($localHour)) {
+            $notification->update(['status' => 'cancelled', 'error' => 'quiet_hours']);
+
+            return;
+        }
+
+        // Metered channels need credits; block (never negative) when insufficient.
+        if (in_array($channel, ['sms', 'whatsapp'], true)) {
+            $credits = app(CreditService::class);
+            $org = $reminder->organization;
+            if (! $credits->deduct($org, $channel, 1, $reminder->id)) {
+                $notification->update(['status' => 'failed', 'error' => 'insufficient_credits']);
+
+                return;
+            }
+        }
+
+        Tenancy::forOrganization($reminder->organization_id, function () use ($recipient, $reminder, $channel) {
+            // email + in_app deliver directly; sms/whatsapp/web_push/webhook run through
+            // their adapters (mock/disabled until real credentials are supplied).
+            $recipient->notify(new ReminderDueNotification($reminder, $channel));
         });
     }
 

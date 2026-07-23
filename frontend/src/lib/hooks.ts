@@ -486,6 +486,67 @@ export function useAdminAction(invalidate: string[] = []) {
   });
 }
 
+/* ── Notification channels (preferences, credits, webhooks) ── */
+
+export interface ChannelPreferences {
+  channels: string[] | null;
+  quiet_hours_enabled: boolean;
+  quiet_start: number | null;
+  quiet_end: number | null;
+}
+
+export function useChannelPreferences() {
+  return useQuery({
+    queryKey: ["channel-preferences"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<ChannelPreferences>>("/channels/preferences");
+      return data.data;
+    },
+  });
+}
+
+export function useUpdateChannelPreferences() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: Partial<ChannelPreferences>) => {
+      await ensureCsrf();
+      const { data } = await api.patch<ApiEnvelope<ChannelPreferences>>("/channels/preferences", input);
+      return data.data;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["channel-preferences"] }),
+  });
+}
+
+export interface CreditsData {
+  balances: { sms: number; whatsapp: number; ai: number };
+  packs: { id: string; channel: string; name: string; credits: number; price: number; currency: string }[];
+}
+
+export function useCredits() {
+  return useQuery({
+    queryKey: ["credits"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<CreditsData>>("/channels/credits");
+      return data.data;
+    },
+  });
+}
+
+export function useBuyCredits() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (packId: string) => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<{ channel: string; balance: number }>>(
+        "/channels/credits/buy",
+        { pack_id: packId },
+      );
+      return data.data;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["credits"] }),
+  });
+}
+
 /* ── Categories ───────────────────────────────────────── */
 
 export function useCategories() {

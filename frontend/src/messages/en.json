@@ -259,6 +259,22 @@
       "syncUnavailable": "Live calendar sync needs setup. You can export or subscribe to an .ics feed today.",
       "connectGoogle": "Connect Google Calendar",
       "connectOutlook": "Connect Outlook"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "channels": "Channels",
+      "quietHours": "Quiet hours",
+      "quietHoursHint": "Pause SMS, WhatsApp, and push during these hours.",
+      "from": "From",
+      "to": "To",
+      "credits": "Message credits",
+      "buy": "Buy",
+      "balance": "{count} left",
+      "email": "Email",
+      "in_app": "In-app",
+      "web_push": "Web push",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp"
     }
   },
   "footer": {

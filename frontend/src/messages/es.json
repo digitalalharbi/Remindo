@@ -259,6 +259,22 @@
       "syncUnavailable": "La sincronización en vivo requiere configuración. Hoy puedes exportar o suscribirte a un feed .ics.",
       "connectGoogle": "Conectar Google Calendar",
       "connectOutlook": "Conectar Outlook"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "channels": "Canales",
+      "quietHours": "Horas de silencio",
+      "quietHoursHint": "Pausa SMS, WhatsApp y notificaciones push durante estas horas.",
+      "from": "Desde",
+      "to": "Hasta",
+      "credits": "Créditos de mensajes",
+      "buy": "Comprar",
+      "balance": "Quedan {count}",
+      "email": "Correo",
+      "in_app": "En la app",
+      "web_push": "Push web",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp"
     }
   },
   "footer": {

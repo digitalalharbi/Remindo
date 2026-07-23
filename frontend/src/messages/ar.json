@@ -259,6 +259,22 @@
       "syncUnavailable": "المزامنة الحية تحتاج إعداداً. يمكنك التصدير أو الاشتراك في ملف .ics الآن.",
       "connectGoogle": "ربط Google Calendar",
       "connectOutlook": "ربط Outlook"
+    },
+    "notifications": {
+      "title": "الإشعارات",
+      "channels": "القنوات",
+      "quietHours": "ساعات الهدوء",
+      "quietHoursHint": "أوقف الرسائل والواتساب وإشعار المتصفح خلال هذه الساعات.",
+      "from": "من",
+      "to": "إلى",
+      "credits": "أرصدة الرسائل",
+      "buy": "شراء",
+      "balance": "باقي {count}",
+      "email": "البريد",
+      "in_app": "داخل النظام",
+      "web_push": "إشعار المتصفح",
+      "sms": "رسائل نصية",
+      "whatsapp": "واتساب"
     }
   },
   "footer": {

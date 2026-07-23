@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CreditPack;
 use App\Models\Faq;
 use App\Models\FeatureFlag;
 use App\Models\Language;
@@ -85,6 +86,20 @@ class PlatformSeeder extends Seeder
             Faq::updateOrCreate(
                 ['category' => $faq['category'], 'sort_order' => $i],
                 $faq + ['published' => true, 'sort_order' => $i],
+            );
+        }
+
+        // Purchasable credit packs (editable from the Super Admin panel).
+        $packs = [
+            ['channel' => 'sms', 'name' => '100 SMS', 'credits' => 100, 'price' => 2500],
+            ['channel' => 'sms', 'name' => '500 SMS', 'credits' => 500, 'price' => 10000],
+            ['channel' => 'whatsapp', 'name' => '100 WhatsApp', 'credits' => 100, 'price' => 3000],
+            ['channel' => 'ai', 'name' => '200 AI operations', 'credits' => 200, 'price' => 2000],
+        ];
+        foreach ($packs as $pack) {
+            CreditPack::updateOrCreate(
+                ['channel' => $pack['channel'], 'name' => $pack['name']],
+                $pack + ['currency' => 'SAR', 'is_active' => true],
             );
         }
     }

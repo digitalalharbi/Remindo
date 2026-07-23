@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Auth\SessionController;
 use App\Http\Controllers\Api\Auth\TwoFactorController;
 use App\Http\Controllers\Api\CalendarController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ChannelController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\NotificationController;
@@ -114,6 +115,18 @@ Route::middleware(['auth:sanctum', 'tenant', 'not_suspended'])->group(function (
     Route::delete('/calendar/connect/{provider}', [CalendarController::class, 'disconnect']);
     Route::post('/calendar/sync/{reminder}', [CalendarController::class, 'sync']);
 
+    // Notification channels — preferences, credits, webhooks, push, health
+    Route::get('/channels/preferences', [ChannelController::class, 'preferences']);
+    Route::patch('/channels/preferences', [ChannelController::class, 'updatePreferences']);
+    Route::get('/channels/health', [ChannelController::class, 'health']);
+    Route::get('/channels/credits', [ChannelController::class, 'wallets']);
+    Route::post('/channels/credits/buy', [ChannelController::class, 'buyCredits']);
+    Route::post('/channels/push/subscribe', [ChannelController::class, 'subscribePush']);
+    Route::get('/channels/webhooks', [ChannelController::class, 'webhooks']);
+    Route::post('/channels/webhooks', [ChannelController::class, 'createWebhook']);
+    Route::delete('/channels/webhooks/{webhook}', [ChannelController::class, 'deleteWebhook']);
+    Route::get('/channels/webhooks/{webhook}/deliveries', [ChannelController::class, 'webhookDeliveries']);
+
     // Documents + AI extraction (review-before-save; never auto-applied)
     Route::get('/documents', [DocumentController::class, 'index']);
     Route::post('/documents', [DocumentController::class, 'store']);
@@ -164,6 +177,11 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
     Route::delete('/faqs/{faq}', [AdminContentController::class, 'destroyFaq']);
     Route::get('/settings', [AdminContentController::class, 'settings']);
     Route::post('/settings', [AdminContentController::class, 'saveSetting']);
+
+    // Credit packs + provider pricing
+    Route::get('/credit-packs', [AdminContentController::class, 'creditPacks']);
+    Route::post('/credit-packs', [AdminContentController::class, 'saveCreditPack']);
+    Route::delete('/credit-packs/{creditPack}', [AdminContentController::class, 'deleteCreditPack']);
 });
 
 // Signed file streaming (authorized by the signed URL, not the session).

@@ -40,6 +40,15 @@ return [
         'provider' => env('CALENDAR_PROVIDER', 'null'),
     ],
 
+    // Metered notification channels — mock until real credentials are supplied.
+    'sms' => ['provider' => env('SMS_PROVIDER', 'mock'), 'key' => env('SMS_API_KEY')],
+    'whatsapp' => ['provider' => env('WHATSAPP_PROVIDER', 'mock'), 'key' => env('WHATSAPP_API_KEY')],
+    'push' => [
+        'vapid_public' => env('VAPID_PUBLIC_KEY'),
+        'vapid_private' => env('VAPID_PRIVATE_KEY'),
+        'vapid_subject' => env('VAPID_SUBJECT', 'mailto:hello@remindo.me'),
+    ],
+
     // OAuth (social login). Buttons are hidden until both id and secret are set.
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
