@@ -214,6 +214,51 @@ export function useParseInstruction() {
   });
 }
 
+/* ── Subscription / billing ───────────────────────────── */
+
+export interface SubscriptionData {
+  plan: Plan;
+  currency: string;
+  subscription: {
+    interval: "monthly" | "yearly";
+    status: string;
+    current_period_end: string;
+  } | null;
+  invoices: {
+    id: string;
+    number: string;
+    status: string;
+    total: number;
+    currency: string;
+    issued_at: string;
+  }[];
+}
+
+export function useSubscription() {
+  return useQuery({
+    queryKey: ["subscription"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<SubscriptionData>>("/subscription");
+      return data.data;
+    },
+  });
+}
+
+export function useSubscribe() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { plan_key: string; interval: "monthly" | "yearly" }) => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<Plan>>("/subscription", input);
+      return data.data;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["subscription"] });
+      qc.invalidateQueries({ queryKey: ["me"] });
+    },
+  });
+}
+
 /* ── Categories ───────────────────────────────────────── */
 
 export function useCategories() {

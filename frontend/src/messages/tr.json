@@ -192,6 +192,21 @@
       "extracting": "Okunuyor…",
       "reviewNotice": "Yapay zeka ile dolduruldu — kaydetmeden önce gözden geçir.",
       "aiBadge": "YZ"
+    },
+    "subscription": {
+      "title": "Abonelik",
+      "currentPlan": "Mevcut plan",
+      "current": "Mevcut",
+      "changePlan": "Planı değiştir",
+      "subscribe": "Abone ol",
+      "renewsOn": "{date} tarihinde yenilenir",
+      "invoices": "Faturalar",
+      "noInvoices": "Henüz fatura yok.",
+      "number": "Numara",
+      "date": "Tarih",
+      "amount": "Tutar",
+      "status": "Durum",
+      "activated": "Planınız aktif."
     }
   },
   "footer": {

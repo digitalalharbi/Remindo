@@ -192,6 +192,21 @@
       "extracting": "Leyendo…",
       "reviewNotice": "Rellenado por IA — revisa antes de guardar.",
       "aiBadge": "IA"
+    },
+    "subscription": {
+      "title": "Suscripción",
+      "currentPlan": "Plan actual",
+      "current": "Actual",
+      "changePlan": "Cambiar de plan",
+      "subscribe": "Suscribirse",
+      "renewsOn": "Se renueva el {date}",
+      "invoices": "Facturas",
+      "noInvoices": "Aún no hay facturas.",
+      "number": "Número",
+      "date": "Fecha",
+      "amount": "Importe",
+      "status": "Estado",
+      "activated": "Tu plan está activo."
     }
   },
   "footer": {

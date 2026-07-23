@@ -192,6 +192,21 @@
       "extracting": "جارٍ القراءة…",
       "reviewNotice": "تم الملء بالذكاء الاصطناعي — راجع قبل الحفظ.",
       "aiBadge": "ذكاء"
+    },
+    "subscription": {
+      "title": "الاشتراك",
+      "currentPlan": "خطتك الحالية",
+      "current": "الحالية",
+      "changePlan": "تغيير الخطة",
+      "subscribe": "اشترك",
+      "renewsOn": "يتجدد في {date}",
+      "invoices": "الفواتير",
+      "noInvoices": "لا توجد فواتير بعد.",
+      "number": "الرقم",
+      "date": "التاريخ",
+      "amount": "المبلغ",
+      "status": "الحالة",
+      "activated": "خطتك مفعّلة الآن."
     }
   },
   "footer": {

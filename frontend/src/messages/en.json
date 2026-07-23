@@ -192,6 +192,21 @@
       "extracting": "Reading…",
       "reviewNotice": "Filled from AI — please review before saving.",
       "aiBadge": "AI"
+    },
+    "subscription": {
+      "title": "Subscription",
+      "currentPlan": "Current plan",
+      "current": "Current",
+      "changePlan": "Change plan",
+      "subscribe": "Subscribe",
+      "renewsOn": "Renews on {date}",
+      "invoices": "Invoices",
+      "noInvoices": "No invoices yet.",
+      "number": "Number",
+      "date": "Date",
+      "amount": "Amount",
+      "status": "Status",
+      "activated": "Your plan is active."
     }
   },
   "footer": {

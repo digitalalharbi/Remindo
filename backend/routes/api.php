@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\ReminderController;
+use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\TagController;
 use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,11 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
     Route::get('/tags', [TagController::class, 'index']);
     Route::post('/tags', [TagController::class, 'store']);
     Route::delete('/tags/{tag}', [TagController::class, 'destroy']);
+
+    // Billing (sandbox gateway by default)
+    Route::get('/subscription', [SubscriptionController::class, 'show']);
+    Route::post('/subscription', [SubscriptionController::class, 'subscribe']);
+    Route::delete('/subscription', [SubscriptionController::class, 'cancel']);
 
     // Documents + AI extraction (review-before-save; never auto-applied)
     Route::post('/documents', [DocumentController::class, 'store']);

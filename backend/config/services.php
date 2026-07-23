@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    // Payments — provider selected here; adapters bound in AppServiceProvider.
+    // sandbox | moyasar | tap | stripe
+    'payments' => [
+        'provider' => env('PAYMENTS_PROVIDER', 'sandbox'),
+        'moyasar' => ['secret' => env('MOYASAR_SECRET_KEY')],
+        'tap' => ['secret' => env('TAP_SECRET_KEY')],
+        'stripe' => [
+            'secret' => env('STRIPE_SECRET_KEY'),
+            'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+        ],
+    ],
+
 ];
