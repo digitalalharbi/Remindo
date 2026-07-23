@@ -8,7 +8,7 @@
 | API | `api.remindo.me` |
 
 ## Services
-- PostgreSQL 16, Redis 7, PHP 8.3+ (Laravel Horizon worker + scheduler), Node 20
+- PostgreSQL 16, Redis 7, PHP 8.4+ (Laravel Horizon worker + scheduler), Node 20
   (Next.js).
 
 ## Environment

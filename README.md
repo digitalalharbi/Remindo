@@ -114,7 +114,7 @@ Then open:
 
 ## Quick start (local, no Docker)
 
-You need PHP 8.3+, Composer, Node 20+, PostgreSQL 16, Redis.
+You need PHP 8.4+, Composer, Node 20+, PostgreSQL 16, Redis.
 
 ### Backend
 
