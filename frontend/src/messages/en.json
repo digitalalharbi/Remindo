@@ -183,7 +183,15 @@
       "saved": "Reminder saved.",
       "renewTitle": "Renew reminder",
       "renewQuestion": "What's the new expiry date?",
-      "renewSave": "Add new date"
+      "renewSave": "Add new date",
+      "smartTitle": "Start faster",
+      "dropDoc": "Drop a document to auto-fill the details",
+      "browse": "browse",
+      "or": "or",
+      "naturalPlaceholder": "e.g. Remind me to renew the insurance a month and a week before",
+      "extracting": "Reading…",
+      "reviewNotice": "Filled from AI — please review before saving.",
+      "aiBadge": "AI"
     }
   },
   "footer": {

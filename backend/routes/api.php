@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\PlanController;
 use App\Http\Controllers\Api\ReminderController;
 use App\Http\Controllers\Api\TagController;
@@ -50,4 +51,14 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
     Route::get('/tags', [TagController::class, 'index']);
     Route::post('/tags', [TagController::class, 'store']);
     Route::delete('/tags/{tag}', [TagController::class, 'destroy']);
+
+    // Documents + AI extraction (review-before-save; never auto-applied)
+    Route::post('/documents', [DocumentController::class, 'store']);
+    Route::post('/documents/{document}/extract', [DocumentController::class, 'extract']);
+    Route::get('/documents/{document}/download', [DocumentController::class, 'download']);
+    Route::post('/ai/parse', [DocumentController::class, 'parse']);
 });
+
+// Signed file streaming (authorized by the signed URL, not the session).
+Route::get('/documents/{document}/file', [DocumentController::class, 'file'])
+    ->middleware('signed')->name('documents.file');

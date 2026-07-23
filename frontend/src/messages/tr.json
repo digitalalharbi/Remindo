@@ -183,7 +183,15 @@
       "saved": "Hatırlatıcı kaydedildi.",
       "renewTitle": "Hatırlatıcıyı yenile",
       "renewQuestion": "Yeni son kullanma tarihi nedir?",
-      "renewSave": "Yeni tarih ekle"
+      "renewSave": "Yeni tarih ekle",
+      "smartTitle": "Daha hızlı başla",
+      "dropDoc": "Ayrıntıları otomatik doldurmak için bir belge bırak",
+      "browse": "göz at",
+      "or": "veya",
+      "naturalPlaceholder": "örn. Sigortayı bir ay ve bir hafta önceden yenilememi hatırlat",
+      "extracting": "Okunuyor…",
+      "reviewNotice": "Yapay zeka ile dolduruldu — kaydetmeden önce gözden geçir.",
+      "aiBadge": "YZ"
     }
   },
   "footer": {

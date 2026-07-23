@@ -159,6 +159,61 @@ export function useDeleteReminder() {
   });
 }
 
+/* ── Documents & AI (extraction is reviewed before save) ── */
+
+export interface ExtractionResult {
+  title?: string;
+  reference_number?: string;
+  issuer?: string;
+  issue_date?: string;
+  expiry_date?: string;
+  summary?: string;
+  suggested_offsets: number[];
+  confidence: number;
+  provider: string;
+  requires_review: boolean;
+}
+
+export function useUploadDocument() {
+  return useMutation({
+    mutationFn: async (file: File) => {
+      await ensureCsrf();
+      const form = new FormData();
+      form.append("file", file);
+      const { data } = await api.post<ApiEnvelope<{ id: string; original_name: string }>>(
+        "/documents",
+        form,
+        { headers: { "Content-Type": "multipart/form-data" } },
+      );
+      return data.data;
+    },
+  });
+}
+
+export function useExtractDocument() {
+  return useMutation({
+    mutationFn: async (documentId: string) => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<ExtractionResult>>(
+        `/documents/${documentId}/extract`,
+      );
+      return data.data;
+    },
+  });
+}
+
+export function useParseInstruction() {
+  return useMutation({
+    mutationFn: async (text: string) => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<ExtractionResult>>("/ai/parse", {
+        text,
+      });
+      return data.data;
+    },
+  });
+}
+
 /* ── Categories ───────────────────────────────────────── */
 
 export function useCategories() {

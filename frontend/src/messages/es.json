@@ -183,7 +183,15 @@
       "saved": "Recordatorio guardado.",
       "renewTitle": "Renovar recordatorio",
       "renewQuestion": "¿Cuál es la nueva fecha de vencimiento?",
-      "renewSave": "Agregar nueva fecha"
+      "renewSave": "Agregar nueva fecha",
+      "smartTitle": "Empieza más rápido",
+      "dropDoc": "Suelta un documento para rellenar los datos",
+      "browse": "explorar",
+      "or": "o",
+      "naturalPlaceholder": "ej. Recuérdame renovar el seguro un mes y una semana antes",
+      "extracting": "Leyendo…",
+      "reviewNotice": "Rellenado por IA — revisa antes de guardar.",
+      "aiBadge": "IA"
     }
   },
   "footer": {
