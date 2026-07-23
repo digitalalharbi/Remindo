@@ -6,7 +6,10 @@ use App\Contracts\DocumentExtractor;
 use App\Contracts\PaymentGateway;
 use App\Services\AI\MockDocumentExtractor;
 use App\Services\Payments\SandboxGateway;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\Microsoft\Provider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,6 +42,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        // Register the Microsoft OAuth provider (SocialiteProviders). Google is
+        // built into Socialite. Providers stay inert until credentials are set.
+        Event::listen(function (SocialiteWasCalled $event) {
+            $event->extendSocialite('microsoft', Provider::class);
+        });
     }
 }

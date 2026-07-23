@@ -105,7 +105,14 @@
     "microsoft": "Continuar con Microsoft",
     "submitLogin": "Iniciar sesión",
     "submitRegister": "Crear cuenta",
-    "agree": "Al crear una cuenta, aceptas nuestros Términos y nuestra Política de Privacidad."
+    "agree": "Al crear una cuenta, aceptas nuestros Términos y nuestra Política de Privacidad.",
+    "twoFactorTitle": "Verificación en dos pasos",
+    "twoFactorPrompt": "Introduce el código de 6 dígitos de tu app de autenticación.",
+    "code": "Código de autenticación",
+    "verify": "Verificar",
+    "useRecoveryCode": "Usar un código de recuperación",
+    "recoveryCode": "Código de recuperación",
+    "continueWith": "Continuar con {provider}"
   },
   "app": {
     "nav": {
@@ -352,5 +359,22 @@
       "saved": "Guardado.",
       "reason": "Motivo (opcional)"
     }
+  },
+  "security": {
+    "title": "Seguridad",
+    "twoFactor": "Autenticación de dos factores",
+    "twoFactorOff": "Desactivada",
+    "twoFactorOn": "Activada",
+    "enable": "Activar",
+    "disable": "Desactivar",
+    "scanHint": "Escanea este código QR con tu app de autenticación y luego introduce el código para confirmar.",
+    "cantScan": "¿No puedes escanear? Usa esta clave:",
+    "recoveryTitle": "Códigos de recuperación",
+    "recoverySaved": "Guarda estos códigos en un lugar seguro. Cada uno se puede usar una vez si pierdes tu dispositivo.",
+    "sessions": "Sesiones activas",
+    "current": "Este dispositivo",
+    "revoke": "Cerrar sesión",
+    "revokeOthers": "Cerrar todas las demás sesiones",
+    "confirm": "Confirmar"
   }
 }

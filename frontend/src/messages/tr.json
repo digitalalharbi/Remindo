@@ -105,7 +105,14 @@
     "microsoft": "Microsoft ile devam et",
     "submitLogin": "Giriş yap",
     "submitRegister": "Hesap oluştur",
-    "agree": "Bir hesap oluşturarak Kullanım Koşullarımızı ve Gizlilik Politikamızı kabul etmiş olursunuz."
+    "agree": "Bir hesap oluşturarak Kullanım Koşullarımızı ve Gizlilik Politikamızı kabul etmiş olursunuz.",
+    "twoFactorTitle": "İki adımlı doğrulama",
+    "twoFactorPrompt": "Kimlik doğrulama uygulamanızdaki 6 haneli kodu girin.",
+    "code": "Doğrulama kodu",
+    "verify": "Doğrula",
+    "useRecoveryCode": "Kurtarma kodu kullan",
+    "recoveryCode": "Kurtarma kodu",
+    "continueWith": "{provider} ile devam et"
   },
   "app": {
     "nav": {
@@ -352,5 +359,22 @@
       "saved": "Kaydedildi.",
       "reason": "Neden (isteğe bağlı)"
     }
+  },
+  "security": {
+    "title": "Güvenlik",
+    "twoFactor": "İki faktörlü kimlik doğrulama",
+    "twoFactorOff": "Kapalı",
+    "twoFactorOn": "Açık",
+    "enable": "Etkinleştir",
+    "disable": "Kapat",
+    "scanHint": "Bu QR kodunu kimlik doğrulama uygulamanızla tarayın, ardından onaylamak için kodu girin.",
+    "cantScan": "Tarayamıyor musunuz? Bu anahtarı kullanın:",
+    "recoveryTitle": "Kurtarma kodları",
+    "recoverySaved": "Bu kodları güvenli bir yerde saklayın. Cihazınızı kaybederseniz her biri bir kez kullanılabilir.",
+    "sessions": "Aktif oturumlar",
+    "current": "Bu cihaz",
+    "revoke": "Oturumu kapat",
+    "revokeOthers": "Diğer tüm oturumları kapat",
+    "confirm": "Onayla"
   }
 }

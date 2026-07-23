@@ -7,7 +7,10 @@ use App\Http\Controllers\Api\Admin\AdminCouponController;
 use App\Http\Controllers\Api\Admin\AdminPlanController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
+use App\Http\Controllers\Api\Auth\OAuthController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
+use App\Http\Controllers\Api\Auth\SessionController;
+use App\Http\Controllers\Api\Auth\TwoFactorController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DocumentController;
@@ -37,6 +40,14 @@ Route::prefix('auth')->group(function () {
     Route::post('/reset-password', [PasswordResetController::class, 'reset'])->middleware('throttle:6,1');
     Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
         ->middleware('signed')->name('verification.verify');
+
+    // 2FA login challenge (session holds the pending user id).
+    Route::post('/two-factor-challenge', [AuthController::class, 'twoFactorChallenge'])->middleware('throttle:6,1');
+
+    // OAuth (social login) — inert until credentials are configured.
+    Route::get('/oauth/status', [OAuthController::class, 'status']);
+    Route::get('/oauth/{provider}/redirect', [OAuthController::class, 'redirect']);
+    Route::get('/oauth/{provider}/callback', [OAuthController::class, 'callback']);
 });
 
 // ── Authenticated ─────────────────────────────────────────
@@ -55,6 +66,20 @@ Route::middleware(['auth:sanctum', 'tenant', 'not_suspended'])->group(function (
     // Profile, team, notifications
     Route::patch('/profile', [ProfileController::class, 'update']);
     Route::get('/team', [TeamController::class, 'index']);
+
+    // Two-factor authentication management
+    Route::post('/auth/two-factor/enable', [TwoFactorController::class, 'enable']);
+    Route::post('/auth/two-factor/confirm', [TwoFactorController::class, 'confirm']);
+    Route::delete('/auth/two-factor', [TwoFactorController::class, 'disable']);
+    Route::get('/auth/two-factor/recovery-codes', [TwoFactorController::class, 'recoveryCodes']);
+
+    // Active-session management
+    Route::get('/auth/sessions', [SessionController::class, 'index']);
+    Route::delete('/auth/sessions/others', [SessionController::class, 'destroyOthers']);
+    Route::delete('/auth/sessions/{id}', [SessionController::class, 'destroy']);
+
+    // Linked social accounts
+    Route::get('/auth/social-accounts', [OAuthController::class, 'status']);
     Route::get('/notifications', [NotificationController::class, 'index']);
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead']);

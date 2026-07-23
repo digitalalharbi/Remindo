@@ -35,7 +35,11 @@ export function useLogin() {
       const { data } = await api.post<ApiEnvelope<User>>("/auth/login", input);
       return data.data;
     },
-    onSuccess: (user) => qc.setQueryData(["me"], user),
+    // A 2FA-enabled account returns { two_factor: true } (no id) — don't treat it as signed in.
+    onSuccess: (user) => {
+      if ((user as unknown as { two_factor?: boolean })?.two_factor) return;
+      qc.setQueryData(["me"], user);
+    },
   });
 }
 
@@ -67,6 +71,100 @@ export function useLogout() {
       await api.post("/auth/logout");
     },
     onSuccess: () => qc.setQueryData(["me"], null),
+  });
+}
+
+export function useTwoFactorChallenge() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { code?: string; recovery_code?: string }) => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<User>>("/auth/two-factor-challenge", input);
+      return data.data;
+    },
+    onSuccess: (user) => qc.setQueryData(["me"], user),
+  });
+}
+
+export function useOAuthStatus() {
+  return useQuery({
+    queryKey: ["oauth-status"],
+    retry: false,
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<{ google: boolean; microsoft: boolean }>>(
+        "/auth/oauth/status",
+      );
+      return data.data;
+    },
+  });
+}
+
+/* ── Two-factor + sessions (account security) ─────────── */
+
+export function useEnableTwoFactor() {
+  return useMutation({
+    mutationFn: async () => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<{ secret: string; otpauth_url: string; qr_svg: string }>>(
+        "/auth/two-factor/enable",
+      );
+      return data.data;
+    },
+  });
+}
+
+export function useConfirmTwoFactor() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (code: string) => {
+      await ensureCsrf();
+      const { data } = await api.post<ApiEnvelope<{ recovery_codes: string[] }>>(
+        "/auth/two-factor/confirm",
+        { code },
+      );
+      return data.data;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["me"] }),
+  });
+}
+
+export function useDisableTwoFactor() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      await ensureCsrf();
+      await api.delete("/auth/two-factor");
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["me"] }),
+  });
+}
+
+export interface SessionInfo {
+  id: string;
+  ip_address?: string;
+  user_agent: string;
+  last_active: number;
+  current: boolean;
+}
+
+export function useSessions() {
+  return useQuery({
+    queryKey: ["sessions"],
+    queryFn: async () => {
+      const { data } = await api.get<ApiEnvelope<SessionInfo[]>>("/auth/sessions");
+      return data.data;
+    },
+  });
+}
+
+export function useRevokeSessions() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (id?: string) => {
+      await ensureCsrf();
+      await api.delete(id ? `/auth/sessions/${id}` : "/auth/sessions/others");
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["sessions"] }),
   });
 }
 

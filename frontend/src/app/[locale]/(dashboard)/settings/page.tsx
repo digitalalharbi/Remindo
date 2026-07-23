@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import { locales } from "@/i18n/routing";
+import { SecuritySettings } from "@/components/dashboard/security-settings";
 
 interface ProfileForm {
   name: string;
@@ -103,6 +104,8 @@ export default function SettingsPage() {
           </Button>
         </div>
       </form>
+
+      <SecuritySettings />
     </div>
   );
 }
